@@ -31,11 +31,11 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "EcoFeast Engine – Smart Food Demand Forecasting" },
+      { name: "description", content: "AI-powered demand forecasting & waste optimization for urban kitchens. Born in Kolkata." },
+      { name: "author", content: "EcoFeast" },
+      { property: "og:title", content: "EcoFeast Engine – Smart Food Demand Forecasting" },
+      { property: "og:description", content: "AI-powered demand forecasting & waste optimization for urban kitchens." },
       { property: "og:type", content: "website" },
       { property: "og:image", content: "https://lovable.dev/opengraph-image-p98pqg.png" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -43,6 +43,9 @@ export const Route = createRootRoute({
       { name: "twitter:image", content: "https://lovable.dev/opengraph-image-p98pqg.png" },
     ],
     links: [
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" as const },
+      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" },
       {
         rel: "stylesheet",
         href: appCss,
