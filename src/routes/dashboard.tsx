@@ -130,8 +130,8 @@ function DashboardPage() {
                   <div key={i} className="flex-1 flex flex-col items-center gap-2">
                     <div className="text-xs font-bold text-muted-foreground">{bar.value}</div>
                     <div
-                      className="w-full gradient-blue-green transition-all duration-700 ease-out brutal-shadow"
-                      style={{ height: `${(bar.value / maxVal) * 100}%`, border: 'none', boxShadow: 'none' }}
+                      className="w-full gradient-blue-green transition-all duration-700 ease-out border-2 border-foreground"
+                      style={{ height: `${(bar.value / maxVal) * 100}%` }}
                     />
                     <div className="text-xs font-bold uppercase tracking-widest">{bar.day}</div>
                   </div>
