@@ -66,13 +66,13 @@ function ImpactPage() {
               </ul>
             </div>
 
-            <div className="animate-on-scroll brutal-shadow border-neon-green p-10" style={{ transitionDelay: "150ms" }}>
-              <Leaf size={32} className="text-neon-green mb-6" />
+            <div className="animate-on-scroll brutal-shadow gradient-green-blue p-10 text-primary-foreground" style={{ transitionDelay: "150ms" }}>
+              <Leaf size={32} className="mb-6" />
               <h3 className="font-heading text-2xl font-bold mb-4">Environmental</h3>
-              <ul className="space-y-3 text-sm text-muted-foreground">
-                <li className="border-l-2 border-neon-green pl-4">40% reduction in food waste</li>
-                <li className="border-l-2 border-neon-green pl-4">Methane emissions reduced proportionally</li>
-                <li className="border-l-2 border-neon-green pl-4">Lower carbon footprint per meal</li>
+              <ul className="space-y-3 text-sm">
+                <li className="border-l-2 border-primary-foreground/50 pl-4">40% reduction in food waste</li>
+                <li className="border-l-2 border-primary-foreground/50 pl-4">Methane emissions reduced proportionally</li>
+                <li className="border-l-2 border-primary-foreground/50 pl-4">Lower carbon footprint per meal</li>
               </ul>
             </div>
 
