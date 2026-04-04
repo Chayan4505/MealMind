@@ -32,7 +32,7 @@ function ImpactPage() {
       </section>
 
       {/* Counters */}
-      <section className="py-24 px-6">
+      <section className="py-24 px-6 dot-grid">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-16">
           <div className="animate-on-scroll">
             <AnimatedCounter end={25} suffix="%" label="Cost Reduction" colorClass="text-neon-pink" />
