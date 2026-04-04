@@ -111,13 +111,13 @@ function HomePage() {
               { icon: <ArrowRight size={32} />, title: "Execute", desc: "Real-time cooking recommendations", bg: "gradient-yellow-pink" },
             ].map((step, i) => (
               <div key={i} className="animate-on-scroll" style={{ transitionDelay: `${i * 150}ms` }}>
-                <div className="brutal-shadow p-8 h-full relative bg-background">
-                  <div className={`w-14 h-14 ${step.color} flex items-center justify-center text-background mb-6`}>
+                 <div className={`brutal-shadow p-8 h-full relative ${step.bg} text-primary-foreground`}>
+                  <div className="w-14 h-14 bg-background/20 flex items-center justify-center mb-6">
                     {step.icon}
                   </div>
-                  <div className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2">Step {i + 1}</div>
+                  <div className="text-xs font-bold uppercase tracking-widest opacity-80 mb-2">Step {i + 1}</div>
                   <h3 className="font-heading text-2xl font-bold mb-3">{step.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{step.desc}</p>
+                  <p className="text-sm opacity-80 leading-relaxed">{step.desc}</p>
                   {i < 3 && (
                     <div className="hidden md:block absolute top-1/2 -right-4 z-10">
                       <ArrowRight size={24} className="text-neon-pink" />
