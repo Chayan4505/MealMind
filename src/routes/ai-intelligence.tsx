@@ -66,7 +66,7 @@ function AIIntelligencePage() {
               loading="lazy"
               width={1200}
               height={800}
-              className="w-full border-2 border-foreground"
+              className="w-full brutal-shadow"
             />
             <div className="absolute -bottom-4 -left-4 w-full h-full border-2 border-neon-blue -z-10" />
           </div>
