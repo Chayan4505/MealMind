@@ -90,7 +90,7 @@ function ContactPage() {
                     <input
                       type="email"
                       required
-                      className="w-full border-2 border-foreground bg-background px-4 py-3 text-sm font-medium focus:outline-none focus:border-neon-pink transition-colors"
+                      className="w-full brutal-shadow bg-background px-4 py-3 text-sm font-medium focus:outline-none focus:border-neon-pink transition-colors"
                       placeholder="you@company.com"
                     />
                   </div>
