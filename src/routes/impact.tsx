@@ -66,7 +66,7 @@ function ImpactPage() {
               </ul>
             </div>
 
-            <div className="animate-on-scroll border-2 border-neon-green p-10 card-lift" style={{ transitionDelay: "150ms" }}>
+            <div className="animate-on-scroll brutal-shadow border-neon-green p-10" style={{ transitionDelay: "150ms" }}>
               <Leaf size={32} className="text-neon-green mb-6" />
               <h3 className="font-heading text-2xl font-bold mb-4">Environmental</h3>
               <ul className="space-y-3 text-sm text-muted-foreground">
