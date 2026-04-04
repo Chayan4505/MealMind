@@ -80,7 +80,7 @@ function AIIntelligencePage() {
             {features.map((feat, i) => (
               <div
                 key={i}
-                className="animate-on-scroll border-2 border-background/20 p-10 card-lift"
+                className="animate-on-scroll brutal-shadow-light p-10"
                 style={{ transitionDelay: `${i * 100}ms` }}
               >
                 <div className={`w-14 h-14 ${feat.color} flex items-center justify-center text-background mb-6`}>
