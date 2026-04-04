@@ -54,7 +54,7 @@ function HomePage() {
               alt="EcoFeast Engine - Kolkata cityscape with AI data visualization"
               width={1920}
               height={1080}
-              className="w-full border-2 border-foreground shadow-2xl"
+              className="w-full brutal-shadow"
             />
             <div className="absolute -bottom-4 -right-4 w-full h-full border-2 border-neon-pink -z-10" />
           </div>
