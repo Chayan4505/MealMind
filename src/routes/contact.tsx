@@ -54,7 +54,7 @@ function ContactPage() {
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 gradient-green-blue flex items-center justify-center">
+                  <div className="w-12 h-12 gradient-green-blue brutal-shadow flex items-center justify-center">
                     <Phone size={20} className="text-background" />
                   </div>
                   <div>
