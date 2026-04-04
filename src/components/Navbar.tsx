@@ -16,7 +16,7 @@ export function Navbar() {
   const location = useLocation();
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-sm border-b border-border">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-sm border-b-3 border-foreground shadow-[0_3px_0_0_oklch(0.13_0.03_265)]">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <Link to="/" className="font-heading text-xl font-bold tracking-tight">
           <span className="text-gradient-pink-blue">EcoFeast</span>

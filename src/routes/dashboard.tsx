@@ -174,7 +174,7 @@ function DashboardPage() {
           </div>
 
           {/* Cooking Recommendation */}
-          <div className="mt-8 border-2 border-neon-pink p-8 bg-background">
+          <div className="mt-8 brutal-shadow border-neon-pink p-8 bg-background">
             <div className="flex items-center gap-3 mb-4">
               <ChefHat size={24} className="text-neon-pink" />
               <span className="text-xs font-bold uppercase tracking-widest">Cooking Recommendation</span>
