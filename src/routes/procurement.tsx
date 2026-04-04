@@ -45,24 +45,22 @@ function ProcurementPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="border-b border-border hover:bg-muted/50 transition-colors">
-                    <td className="py-6 px-2 text-lg">Chicken (Raw)</td>
-                    <td className="py-6 px-2 text-neon-pink text-xl">45 kg</td>
-                    <td className="py-6 px-2 text-xl">~38 kg</td>
-                    <td className="py-6 px-2 text-right"><Button variant="outline"><CheckCircle size={16} className="mr-2 text-neon-green" /> Procured</Button></td>
-                  </tr>
-                  <tr className="border-b border-border hover:bg-muted/50 transition-colors">
-                    <td className="py-6 px-2 text-lg">Basmati Rice</td>
-                    <td className="py-6 px-2 text-neon-blue text-xl">From Inventory</td>
-                    <td className="py-6 px-2 text-xl">90 kg</td>
-                    <td className="py-6 px-2 text-right"><Button variant="neonPink"><Utensils size={16} className="mr-2" /> Prep Now</Button></td>
-                  </tr>
-                  <tr className="hover:bg-muted/50 transition-colors">
-                    <td className="py-6 px-2 text-lg">Vegetables (Mixed)</td>
-                    <td className="py-6 px-2 text-neon-pink text-xl">20 kg</td>
-                    <td className="py-6 px-2 text-xl">20 kg</td>
-                    <td className="py-6 px-2 text-right"><Button variant="outline"><CheckCircle size={16} className="mr-2 text-neon-green" /> Procured</Button></td>
-                  </tr>
+                  {user?.user_metadata?.raw_materials?.length > 0 ? (
+                    user?.user_metadata.raw_materials.map((item: any, idx: number) => (
+                      <tr key={idx} className="border-b border-border hover:bg-muted/50 transition-colors">
+                        <td className="py-6 px-2 text-lg">{item.ingredient}</td>
+                        <td className="py-6 px-2 text-neon-pink text-xl">{item.buyQty}</td>
+                        <td className="py-6 px-2 text-xl">{item.cookQty}</td>
+                        <td className="py-6 px-2 text-right"><Button variant={idx % 2 === 0 ? "outline" : "neonPink"}><CheckCircle size={16} className="mr-2" /> Procured</Button></td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={4} className="py-6 px-2 text-center text-muted-foreground text-lg">
+                        No procurement data found. Please add a menu first.
+                      </td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>

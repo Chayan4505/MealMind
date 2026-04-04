@@ -12,7 +12,7 @@ export const Route = createFileRoute("/setup")({
 });
 
 function SetupPage() {
-  const { user, updateRestaurantName, isLoading } = useAuth();
+  const { user, updateRestaurantName, updateProfileData, isLoading } = useAuth();
   const [restaurantName, setRestaurantName] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -114,10 +114,44 @@ function SetupPage() {
     setStep(2);
   };
 
+  const generateProcurementForMenu = async (menuList: string[]) => {
+    const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+    if (!GEMINI_API_KEY) {
+       return [
+          { ingredient: "Chicken (Raw)", buyQty: "45 kg", cookQty: "~38 kg" },
+          { ingredient: "Basmati Rice", buyQty: "From Inventory", cookQty: "90 kg" },
+          { ingredient: "Vegetables (Mixed)", buyQty: "20 kg", cookQty: "20 kg" }
+        ];
+    }
+    
+    try {
+       const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+             contents: [{ parts: [{ text: `We are predicting demand for 450 meals today based heavily on this specific menu: ${menuList.join(", ")}. Give me a raw materials list of precisely 4 major food ingredients required to cook these menu items. Return ONLY a valid JSON array of objects taking this exact string schema shape: [{"ingredient": "string", "buyQty": "string", "cookQty": "string"}]. Do NOT wrap in markdown tags or add any text outside the JSON array.` }] }]
+          })
+       });
+       const data = await response.json();
+       if (data.candidates && data.candidates[0]) {
+           let text = data.candidates[0].content.parts[0].text;
+           text = text.replace(/```json/g, "").replace(/```/g, "").trim();
+           return JSON.parse(text);
+       }
+    } catch(err) {
+       console.error("Procurement Gen Error:", err);
+    }
+    return [];
+  };
+
   const handleFinalize = async () => {
     setIsExtracting(true);
-    await updateRestaurantName(restaurantName);
-    // At this scale, the extracted menu items could be safely dumped into Supabase inside user_metadata or a new table!
+    const rawMaterials = await generateProcurementForMenu(extractedItems);
+    await updateProfileData({
+      restaurant_name: restaurantName,
+      menu_items: extractedItems,
+      raw_materials: rawMaterials
+    });
     setIsExtracting(false);
     navigate({ to: "/dashboard" });
   };

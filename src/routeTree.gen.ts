@@ -9,9 +9,9 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ViewMenuRouteImport } from './routes/view-menu'
 import { Route as SetupRouteImport } from './routes/setup'
 import { Route as ProcurementRouteImport } from './routes/procurement'
+import { Route as MenuRouteImport } from './routes/menu'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ImpactRouteImport } from './routes/impact'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
@@ -23,11 +23,6 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AiIntelligenceRouteImport } from './routes/ai-intelligence'
 import { Route as IndexRouteImport } from './routes/index'
 
-const ViewMenuRoute = ViewMenuRouteImport.update({
-  id: '/view-menu',
-  path: '/view-menu',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const SetupRoute = SetupRouteImport.update({
   id: '/setup',
   path: '/setup',
@@ -36,6 +31,11 @@ const SetupRoute = SetupRouteImport.update({
 const ProcurementRoute = ProcurementRouteImport.update({
   id: '/procurement',
   path: '/procurement',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MenuRoute = MenuRouteImport.update({
+  id: '/menu',
+  path: '/menu',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -100,9 +100,9 @@ export interface FileRoutesByFullPath {
   '/how-it-works': typeof HowItWorksRoute
   '/impact': typeof ImpactRoute
   '/login': typeof LoginRoute
+  '/menu': typeof MenuRoute
   '/procurement': typeof ProcurementRoute
   '/setup': typeof SetupRoute
-  '/view-menu': typeof ViewMenuRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -115,9 +115,9 @@ export interface FileRoutesByTo {
   '/how-it-works': typeof HowItWorksRoute
   '/impact': typeof ImpactRoute
   '/login': typeof LoginRoute
+  '/menu': typeof MenuRoute
   '/procurement': typeof ProcurementRoute
   '/setup': typeof SetupRoute
-  '/view-menu': typeof ViewMenuRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -131,9 +131,9 @@ export interface FileRoutesById {
   '/how-it-works': typeof HowItWorksRoute
   '/impact': typeof ImpactRoute
   '/login': typeof LoginRoute
+  '/menu': typeof MenuRoute
   '/procurement': typeof ProcurementRoute
   '/setup': typeof SetupRoute
-  '/view-menu': typeof ViewMenuRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -148,9 +148,9 @@ export interface FileRouteTypes {
     | '/how-it-works'
     | '/impact'
     | '/login'
+    | '/menu'
     | '/procurement'
     | '/setup'
-    | '/view-menu'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -163,9 +163,9 @@ export interface FileRouteTypes {
     | '/how-it-works'
     | '/impact'
     | '/login'
+    | '/menu'
     | '/procurement'
     | '/setup'
-    | '/view-menu'
   id:
     | '__root__'
     | '/'
@@ -178,9 +178,9 @@ export interface FileRouteTypes {
     | '/how-it-works'
     | '/impact'
     | '/login'
+    | '/menu'
     | '/procurement'
     | '/setup'
-    | '/view-menu'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -194,20 +194,13 @@ export interface RootRouteChildren {
   HowItWorksRoute: typeof HowItWorksRoute
   ImpactRoute: typeof ImpactRoute
   LoginRoute: typeof LoginRoute
+  MenuRoute: typeof MenuRoute
   ProcurementRoute: typeof ProcurementRoute
   SetupRoute: typeof SetupRoute
-  ViewMenuRoute: typeof ViewMenuRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/view-menu': {
-      id: '/view-menu'
-      path: '/view-menu'
-      fullPath: '/view-menu'
-      preLoaderRoute: typeof ViewMenuRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/setup': {
       id: '/setup'
       path: '/setup'
@@ -220,6 +213,13 @@ declare module '@tanstack/react-router' {
       path: '/procurement'
       fullPath: '/procurement'
       preLoaderRoute: typeof ProcurementRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/menu': {
+      id: '/menu'
+      path: '/menu'
+      fullPath: '/menu'
+      preLoaderRoute: typeof MenuRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -306,9 +306,9 @@ const rootRouteChildren: RootRouteChildren = {
   HowItWorksRoute: HowItWorksRoute,
   ImpactRoute: ImpactRoute,
   LoginRoute: LoginRoute,
+  MenuRoute: MenuRoute,
   ProcurementRoute: ProcurementRoute,
   SetupRoute: SetupRoute,
-  ViewMenuRoute: ViewMenuRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

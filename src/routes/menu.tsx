@@ -2,12 +2,15 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { ClipboardList, ChefHat } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
-export const Route = createFileRoute("/view-menu")({
+export const Route = createFileRoute("/menu")({
   component: ViewMenuPage,
 });
 
 function ViewMenuPage() {
+  const { user } = useAuth();
+  
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
@@ -25,12 +28,17 @@ function ViewMenuPage() {
              </p>
              
              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Mock data, normally fetched from user_metadata.menu */}
-                {["Hyderabadi Chicken Dum Biryani", "Mutton Rogan Josh", "Paneer Butter Masala", "Garlic Butter Naan", "Tandoori Roti", "Crispy Masala Dosa", "Gulab Jamun"].map((item, i) => (
-                  <div key={i} className="p-4 border-2 border-foreground bg-background brutal-shadow flex items-center gap-4 font-bold text-lg hover:-translate-y-1 transition-transform">
-                    <ChefHat size={20} className="text-neon-pink shrink-0" /> {item}
+                {user?.user_metadata?.menu_items?.length > 0 ? (
+                  user?.user_metadata.menu_items.map((item: string, i: number) => (
+                    <div key={i} className="p-4 border-2 border-foreground bg-background brutal-shadow flex items-center gap-4 font-bold text-lg hover:-translate-y-1 transition-transform">
+                      <ChefHat size={20} className="text-neon-pink shrink-0" /> {item}
+                    </div>
+                  ))
+                ) : (
+                  <div className="col-span-1 md:col-span-2 text-center py-10 text-muted-foreground font-bold text-lg">
+                    No menu items found. Please upload one via Setup.
                   </div>
-                ))}
+                )}
              </div>
           </div>
         </div>

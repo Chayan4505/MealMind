@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Utensils, AlertTriangle, ChefHat, Droplets, ArrowDown, ArrowUp, CheckCircle, RefreshCcw, Bell, Upload, FileImage, Sparkles, Check, Image as ImageIcon } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
@@ -13,7 +13,7 @@ export const Route = createFileRoute("/dashboard")({
 
 function DashboardPage() {
   const scrollRef = useScrollAnimation();
-  const { user } = useAuth();
+  const { user, updateProfileData } = useAuth();
   const [wasteLevel, setWasteLevel] = useState<"Low" | "Expected" | "High" | null>(null);
   const [isRecalibrating, setIsRecalibrating] = useState(false);
 
@@ -22,12 +22,19 @@ function DashboardPage() {
   const [isExtracting, setIsExtracting] = useState(false);
   const [extractedItems, setExtractedItems] = useState<string[]>([]);
 
-  const [procurementItems, setProcurementItems] = useState<{ingredient: string, buyQty: string, cookQty: string}[]>([
-    { ingredient: "Chicken (Raw)", buyQty: "45 kg", cookQty: "~38 kg" },
-    { ingredient: "Basmati Rice", buyQty: "From Inventory", cookQty: "90 kg" },
-    { ingredient: "Vegetables (Mixed)", buyQty: "20 kg", cookQty: "20 kg" }
-  ]);
+  const [procurementItems, setProcurementItems] = useState<{ingredient: string, buyQty: string, cookQty: string}[]>([]);
   const [isProcurementGenerating, setIsProcurementGenerating] = useState(false);
+
+  useEffect(() => {
+    if (user?.user_metadata) {
+      if (user.user_metadata.menu_items && user.user_metadata.menu_items.length > 0) {
+        setExtractedItems(user.user_metadata.menu_items);
+      }
+      if (user.user_metadata.raw_materials && user.user_metadata.raw_materials.length > 0) {
+        setProcurementItems(user.user_metadata.raw_materials);
+      }
+    }
+  }, [user]);
 
   const generateProcurementForMenu = async (menuList: string[]) => {
     setIsProcurementGenerating(true);
@@ -49,12 +56,16 @@ function DashboardPage() {
        if (data.candidates && data.candidates[0]) {
            let text = data.candidates[0].content.parts[0].text;
            text = text.replace(/```json/g, "").replace(/```/g, "").trim();
-           setProcurementItems(JSON.parse(text));
+           const parsed = JSON.parse(text);
+           setProcurementItems(parsed);
+           setIsProcurementGenerating(false);
+           return parsed;
        }
     } catch(err) {
        console.error("Procurement Gen Error:", err);
     }
     setIsProcurementGenerating(false);
+    return [];
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -113,7 +124,12 @@ function DashboardPage() {
       const itemsArray = text.split('\n').filter((item: string) => item.trim() !== '');
       setExtractedItems(itemsArray);
       
-      generateProcurementForMenu(itemsArray);
+      const newRawMaterials = await generateProcurementForMenu(itemsArray);
+      await updateProfileData({
+        restaurant_name: user?.user_metadata?.restaurant_name,
+        menu_items: itemsArray,
+        raw_materials: newRawMaterials
+      });
     } catch (error: any) {
       console.error("Gemini Extraction Error:", error);
       setExtractedItems([`App Error: ${error.message || "Failed to contact Google API."}`]);

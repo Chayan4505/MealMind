@@ -22,6 +22,7 @@ const publicLinks = [
 
 const authLinks = [
   { to: "/dashboard", label: "Overview" },
+  { to: "/menu", label: "Menu" },
   { to: "/forecast", label: "Forecast" },
   { to: "/procurement", label: "Procure" },
   { to: "/feedback", label: "Log Waste" },
@@ -86,7 +87,7 @@ export function Navbar() {
                        <Link to="/edit-menu">Edit Menu</Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild className="cursor-pointer font-bold">
-                       <Link to="/view-menu">View Uploaded Menu</Link>
+                       <Link to="/menu">View Uploaded Menu</Link>
                     </DropdownMenuItem>
                   </DropdownMenuGroup>
                   <DropdownMenuSeparator className="bg-border" />
@@ -139,7 +140,7 @@ export function Navbar() {
                   Edit Menu
                 </Button>
               </Link>
-              <Link to="/view-menu" onClick={() => setOpen(false)} className="w-full">
+              <Link to="/menu" onClick={() => setOpen(false)} className="w-full">
                 <Button variant="outline" className="w-full font-bold uppercase tracking-widest text-sm justify-start">
                   View Uploaded Menu
                 </Button>
