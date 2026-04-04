@@ -76,13 +76,13 @@ function ImpactPage() {
               </ul>
             </div>
 
-            <div className="animate-on-scroll brutal-shadow border-neon-blue p-10" style={{ transitionDelay: "300ms" }}>
-              <Heart size={32} className="text-neon-blue mb-6" />
+            <div className="animate-on-scroll brutal-shadow gradient-blue-green p-10 text-primary-foreground" style={{ transitionDelay: "300ms" }}>
+              <Heart size={32} className="mb-6" />
               <h3 className="font-heading text-2xl font-bold mb-4">Social</h3>
-              <ul className="space-y-3 text-sm text-muted-foreground">
-                <li className="border-l-2 border-neon-blue pl-4">Surplus redistributed to NGOs</li>
-                <li className="border-l-2 border-neon-blue pl-4">Community feeding programs supported</li>
-                <li className="border-l-2 border-neon-blue pl-4">Staff empowered with AI tools</li>
+              <ul className="space-y-3 text-sm">
+                <li className="border-l-2 border-primary-foreground/50 pl-4">Surplus redistributed to NGOs</li>
+                <li className="border-l-2 border-primary-foreground/50 pl-4">Community feeding programs supported</li>
+                <li className="border-l-2 border-primary-foreground/50 pl-4">Staff empowered with AI tools</li>
               </ul>
             </div>
           </div>
