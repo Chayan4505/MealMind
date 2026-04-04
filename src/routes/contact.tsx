@@ -36,7 +36,7 @@ function ContactPage() {
 
               <div className="space-y-6">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 gradient-pink-blue flex items-center justify-center">
+                  <div className="w-12 h-12 gradient-pink-blue brutal-shadow flex items-center justify-center">
                     <Mail size={20} className="text-background" />
                   </div>
                   <div>
