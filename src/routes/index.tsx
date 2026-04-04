@@ -134,7 +134,7 @@ function HomePage() {
       <section className="py-32 px-6 bg-foreground text-background">
         <div className="max-w-7xl mx-auto text-center">
           <div className="animate-on-scroll">
-            <div className="inline-block border-2 border-neon-yellow px-4 py-1 mb-6">
+            <div className="inline-block brutal-shadow-light px-4 py-1 mb-6">
               <span className="text-xs font-bold uppercase tracking-widest text-neon-yellow">Innovation Spotlight</span>
             </div>
             <h2 className="font-heading text-4xl md:text-6xl font-bold mb-8">
