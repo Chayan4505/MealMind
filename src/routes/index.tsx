@@ -131,7 +131,7 @@ function HomePage() {
       </section>
 
       {/* Kolkata Appetite Index */}
-      <section className="py-32 px-6 bg-foreground text-background">
+      <section className="py-32 px-6 dot-grid">
         <div className="max-w-7xl mx-auto text-center">
           <div className="animate-on-scroll">
             <div className="inline-block brutal-shadow-light px-4 py-1 mb-6">
