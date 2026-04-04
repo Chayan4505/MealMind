@@ -48,8 +48,8 @@
   --color-neon-blue: var(--neon-blue);
   --color-neon-yellow: var(--neon-yellow);
   --color-neon-green: var(--neon-green);
-  --font-heading: "Space Grotesk", system-ui, sans-serif;
-  --font-body: "Inter", system-ui, sans-serif;
+  --font-heading: "Google Sans", system-ui, sans-serif;
+  --font-body: "Google Sans", system-ui, sans-serif;
 }
 
 :root {
@@ -115,21 +115,21 @@
   background-size: 24px 24px;
 }
 
-/* Neon gradient backgrounds */
+/* Solid backgrounds (formerly gradients) */
 .gradient-pink-blue {
-  background: linear-gradient(135deg, var(--neon-pink), var(--neon-blue));
+  background: var(--neon-pink);
 }
 
 .gradient-blue-green {
-  background: linear-gradient(135deg, var(--neon-blue), var(--neon-green));
+  background: var(--neon-blue);
 }
 
 .gradient-yellow-pink {
-  background: linear-gradient(135deg, var(--neon-yellow), var(--neon-pink));
+  background: var(--neon-yellow);
 }
 
 .gradient-green-blue {
-  background: linear-gradient(135deg, var(--neon-green), var(--neon-blue));
+  background: var(--neon-green);
 }
 
 /* Hover glow */
@@ -247,17 +247,11 @@
   animation: flow-dash 1s linear infinite;
 }
 
-/* Gradient text */
+/* Solid text (formerly gradients) */
 .text-gradient-pink-blue {
-  background: linear-gradient(135deg, var(--neon-pink), var(--neon-blue));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--neon-pink);
 }
 
 .text-gradient-blue-green {
-  background: linear-gradient(135deg, var(--neon-blue), var(--neon-green));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--neon-blue);
 }

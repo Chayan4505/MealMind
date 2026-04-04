@@ -9,13 +9,40 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ViewMenuRouteImport } from './routes/view-menu'
+import { Route as SetupRouteImport } from './routes/setup'
+import { Route as ProcurementRouteImport } from './routes/procurement'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as ImpactRouteImport } from './routes/impact'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
+import { Route as ForecastRouteImport } from './routes/forecast'
+import { Route as FeedbackRouteImport } from './routes/feedback'
+import { Route as EditMenuRouteImport } from './routes/edit-menu'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AiIntelligenceRouteImport } from './routes/ai-intelligence'
 import { Route as IndexRouteImport } from './routes/index'
 
+const ViewMenuRoute = ViewMenuRouteImport.update({
+  id: '/view-menu',
+  path: '/view-menu',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SetupRoute = SetupRouteImport.update({
+  id: '/setup',
+  path: '/setup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProcurementRoute = ProcurementRouteImport.update({
+  id: '/procurement',
+  path: '/procurement',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ImpactRoute = ImpactRouteImport.update({
   id: '/impact',
   path: '/impact',
@@ -24,6 +51,21 @@ const ImpactRoute = ImpactRouteImport.update({
 const HowItWorksRoute = HowItWorksRouteImport.update({
   id: '/how-it-works',
   path: '/how-it-works',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForecastRoute = ForecastRouteImport.update({
+  id: '/forecast',
+  path: '/forecast',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeedbackRoute = FeedbackRouteImport.update({
+  id: '/feedback',
+  path: '/feedback',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EditMenuRoute = EditMenuRouteImport.update({
+  id: '/edit-menu',
+  path: '/edit-menu',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -52,16 +94,30 @@ export interface FileRoutesByFullPath {
   '/ai-intelligence': typeof AiIntelligenceRoute
   '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRoute
+  '/edit-menu': typeof EditMenuRoute
+  '/feedback': typeof FeedbackRoute
+  '/forecast': typeof ForecastRoute
   '/how-it-works': typeof HowItWorksRoute
   '/impact': typeof ImpactRoute
+  '/login': typeof LoginRoute
+  '/procurement': typeof ProcurementRoute
+  '/setup': typeof SetupRoute
+  '/view-menu': typeof ViewMenuRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ai-intelligence': typeof AiIntelligenceRoute
   '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRoute
+  '/edit-menu': typeof EditMenuRoute
+  '/feedback': typeof FeedbackRoute
+  '/forecast': typeof ForecastRoute
   '/how-it-works': typeof HowItWorksRoute
   '/impact': typeof ImpactRoute
+  '/login': typeof LoginRoute
+  '/procurement': typeof ProcurementRoute
+  '/setup': typeof SetupRoute
+  '/view-menu': typeof ViewMenuRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -69,8 +125,15 @@ export interface FileRoutesById {
   '/ai-intelligence': typeof AiIntelligenceRoute
   '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRoute
+  '/edit-menu': typeof EditMenuRoute
+  '/feedback': typeof FeedbackRoute
+  '/forecast': typeof ForecastRoute
   '/how-it-works': typeof HowItWorksRoute
   '/impact': typeof ImpactRoute
+  '/login': typeof LoginRoute
+  '/procurement': typeof ProcurementRoute
+  '/setup': typeof SetupRoute
+  '/view-menu': typeof ViewMenuRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -79,24 +142,45 @@ export interface FileRouteTypes {
     | '/ai-intelligence'
     | '/contact'
     | '/dashboard'
+    | '/edit-menu'
+    | '/feedback'
+    | '/forecast'
     | '/how-it-works'
     | '/impact'
+    | '/login'
+    | '/procurement'
+    | '/setup'
+    | '/view-menu'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/ai-intelligence'
     | '/contact'
     | '/dashboard'
+    | '/edit-menu'
+    | '/feedback'
+    | '/forecast'
     | '/how-it-works'
     | '/impact'
+    | '/login'
+    | '/procurement'
+    | '/setup'
+    | '/view-menu'
   id:
     | '__root__'
     | '/'
     | '/ai-intelligence'
     | '/contact'
     | '/dashboard'
+    | '/edit-menu'
+    | '/feedback'
+    | '/forecast'
     | '/how-it-works'
     | '/impact'
+    | '/login'
+    | '/procurement'
+    | '/setup'
+    | '/view-menu'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -104,12 +188,47 @@ export interface RootRouteChildren {
   AiIntelligenceRoute: typeof AiIntelligenceRoute
   ContactRoute: typeof ContactRoute
   DashboardRoute: typeof DashboardRoute
+  EditMenuRoute: typeof EditMenuRoute
+  FeedbackRoute: typeof FeedbackRoute
+  ForecastRoute: typeof ForecastRoute
   HowItWorksRoute: typeof HowItWorksRoute
   ImpactRoute: typeof ImpactRoute
+  LoginRoute: typeof LoginRoute
+  ProcurementRoute: typeof ProcurementRoute
+  SetupRoute: typeof SetupRoute
+  ViewMenuRoute: typeof ViewMenuRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/view-menu': {
+      id: '/view-menu'
+      path: '/view-menu'
+      fullPath: '/view-menu'
+      preLoaderRoute: typeof ViewMenuRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/setup': {
+      id: '/setup'
+      path: '/setup'
+      fullPath: '/setup'
+      preLoaderRoute: typeof SetupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/procurement': {
+      id: '/procurement'
+      path: '/procurement'
+      fullPath: '/procurement'
+      preLoaderRoute: typeof ProcurementRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/impact': {
       id: '/impact'
       path: '/impact'
@@ -122,6 +241,27 @@ declare module '@tanstack/react-router' {
       path: '/how-it-works'
       fullPath: '/how-it-works'
       preLoaderRoute: typeof HowItWorksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forecast': {
+      id: '/forecast'
+      path: '/forecast'
+      fullPath: '/forecast'
+      preLoaderRoute: typeof ForecastRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feedback': {
+      id: '/feedback'
+      path: '/feedback'
+      fullPath: '/feedback'
+      preLoaderRoute: typeof FeedbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/edit-menu': {
+      id: '/edit-menu'
+      path: '/edit-menu'
+      fullPath: '/edit-menu'
+      preLoaderRoute: typeof EditMenuRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -160,8 +300,15 @@ const rootRouteChildren: RootRouteChildren = {
   AiIntelligenceRoute: AiIntelligenceRoute,
   ContactRoute: ContactRoute,
   DashboardRoute: DashboardRoute,
+  EditMenuRoute: EditMenuRoute,
+  FeedbackRoute: FeedbackRoute,
+  ForecastRoute: ForecastRoute,
   HowItWorksRoute: HowItWorksRoute,
   ImpactRoute: ImpactRoute,
+  LoginRoute: LoginRoute,
+  ProcurementRoute: ProcurementRoute,
+  SetupRoute: SetupRoute,
+  ViewMenuRoute: ViewMenuRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
