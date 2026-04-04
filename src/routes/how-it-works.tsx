@@ -97,7 +97,7 @@ function HowItWorksPage() {
                     {stage.details.map((detail, j) => (
                       <div
                         key={j}
-                        className={`${i % 2 === 0 ? 'brutal-shadow' : 'brutal-shadow-light'} px-4 py-3 text-xs font-bold uppercase tracking-widest`}
+                        className="brutal-shadow px-4 py-3 text-xs font-bold uppercase tracking-widest"
                       >
                         {detail}
                       </div>

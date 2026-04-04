@@ -33,7 +33,7 @@ export function Footer() {
           <p className="text-sm opacity-70 mt-1">Kolkata, India</p>
         </div>
       </div>
-      <div className="max-w-7xl mx-auto mt-12 pt-8 border-t border-background/20 text-center">
+      <div className="max-w-7xl mx-auto mt-12 pt-8 border-t border-border text-center">
         <p className="text-xs opacity-50">© 2026 EcoFeast Engine. All rights reserved.</p>
       </div>
     </footer>
