@@ -142,7 +142,7 @@ function DashboardPage() {
             {/* Side Panels */}
             <div className="flex flex-col gap-6">
               {/* Waste Reduction */}
-              <div className="border-2 border-neon-green p-6 bg-background card-lift">
+              <div className="brutal-shadow border-neon-green p-6 bg-background">
                 <div className="flex items-center gap-3 mb-3">
                   <TrendingDown size={20} className="text-neon-green" />
                   <span className="text-xs font-bold uppercase tracking-widest">Waste Reduction</span>
