@@ -67,7 +67,7 @@ function ContactPage() {
 
             <div className="animate-slide-right">
               {submitted ? (
-                <div className="border-2 border-neon-green p-12 text-center">
+                <div className="brutal-shadow border-neon-green p-12 text-center">
                   <div className="font-heading text-3xl font-bold mb-4 text-gradient-blue-green">Thank You!</div>
                   <p className="text-muted-foreground">We'll be in touch shortly.</p>
                 </div>
