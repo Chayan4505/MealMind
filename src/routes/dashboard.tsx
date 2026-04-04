@@ -161,7 +161,7 @@ function DashboardPage() {
               </div>
 
               {/* Alert */}
-              <div className="border-2 border-neon-yellow p-6 bg-background card-lift">
+              <div className="brutal-shadow border-neon-yellow p-6 bg-background">
                 <div className="flex items-center gap-3 mb-3">
                   <AlertTriangle size={20} className="text-neon-yellow" />
                   <span className="text-xs font-bold uppercase tracking-widest">Alert</span>
