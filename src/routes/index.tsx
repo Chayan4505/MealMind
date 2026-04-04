@@ -111,7 +111,7 @@ function HomePage() {
               { icon: <ArrowRight size={32} />, title: "Execute", desc: "Real-time cooking recommendations", color: "gradient-yellow-pink" },
             ].map((step, i) => (
               <div key={i} className="animate-on-scroll" style={{ transitionDelay: `${i * 150}ms` }}>
-                <div className="border-2 border-foreground p-8 h-full card-lift relative">
+                <div className="brutal-shadow p-8 h-full relative bg-background">
                   <div className={`w-14 h-14 ${step.color} flex items-center justify-center text-background mb-6`}>
                     {step.icon}
                   </div>
