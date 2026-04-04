@@ -73,7 +73,7 @@ function ContactPage() {
                 </div>
               ) : (
                 <form
-                  className="border-2 border-foreground p-10 space-y-6"
+                  className="brutal-shadow p-10 space-y-6 bg-background"
                   onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}
                 >
                   <div>
