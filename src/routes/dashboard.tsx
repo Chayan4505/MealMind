@@ -109,7 +109,7 @@ function DashboardPage() {
           {/* Dashboard Grid */}
           <div className="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Main Forecast Chart */}
-            <div className="lg:col-span-2 border-2 border-foreground p-8 bg-background">
+            <div className="lg:col-span-2 brutal-shadow p-8 bg-background">
               <div className="flex items-center justify-between mb-8">
                 <div>
                   <div className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Weekly Forecast</div>
