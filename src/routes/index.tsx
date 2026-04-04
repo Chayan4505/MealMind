@@ -62,7 +62,7 @@ function HomePage() {
       </section>
 
       {/* Problem Section */}
-      <section className="py-32 px-6 bg-foreground text-background">
+      <section className="py-32 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="animate-on-scroll">
             <h2 className="font-heading text-4xl md:text-6xl font-bold mb-6">
@@ -131,10 +131,10 @@ function HomePage() {
       </section>
 
       {/* Kolkata Appetite Index */}
-      <section className="py-32 px-6 bg-foreground text-background">
+      <section className="py-32 px-6 dot-grid">
         <div className="max-w-7xl mx-auto text-center">
           <div className="animate-on-scroll">
-            <div className="inline-block brutal-shadow-light px-4 py-1 mb-6">
+            <div className="inline-block brutal-shadow px-4 py-1 mb-6">
               <span className="text-xs font-bold uppercase tracking-widest text-neon-yellow">Innovation Spotlight</span>
             </div>
             <h2 className="font-heading text-4xl md:text-6xl font-bold mb-8">
@@ -150,7 +150,7 @@ function HomePage() {
               { label: "Exam Season", value: "Active", desc: "College exams shift meal timing", color: "border-neon-pink" },
               { label: "KAI Score", value: "0.73", desc: "Composite appetite coefficient", color: "border-neon-green" },
             ].map((item, i) => (
-              <div key={i} className={`animate-on-scroll brutal-shadow-light p-8 text-left`} style={{ transitionDelay: `${i * 150}ms` }}>
+              <div key={i} className={`animate-on-scroll brutal-shadow p-8 text-left`} style={{ transitionDelay: `${i * 150}ms` }}>
                 <div className="text-xs font-bold uppercase tracking-widest opacity-50 mb-2">{item.label}</div>
                 <div className="font-heading text-4xl font-bold mb-2">{item.value}</div>
                 <p className="text-sm opacity-60">{item.desc}</p>

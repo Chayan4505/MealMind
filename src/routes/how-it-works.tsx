@@ -82,7 +82,7 @@ function HowItWorksPage() {
       {stages.map((stage, i) => (
         <section
           key={i}
-          className={`py-24 px-6 ${i % 2 === 0 ? "bg-background" : "bg-foreground text-background"}`}
+          className={`py-24 px-6 ${i % 2 === 0 ? "bg-background" : "dot-grid"}`}
         >
           <div className="max-w-7xl mx-auto">
             <div className={`grid grid-cols-1 lg:grid-cols-2 gap-16 items-center ${i % 2 === 1 ? "lg:flex-row-reverse" : ""}`}>
@@ -97,7 +97,7 @@ function HowItWorksPage() {
                     {stage.details.map((detail, j) => (
                       <div
                         key={j}
-                        className={`${i % 2 === 0 ? 'brutal-shadow' : 'brutal-shadow-light'} px-4 py-3 text-xs font-bold uppercase tracking-widest`}
+                        className="brutal-shadow px-4 py-3 text-xs font-bold uppercase tracking-widest"
                       >
                         {detail}
                       </div>

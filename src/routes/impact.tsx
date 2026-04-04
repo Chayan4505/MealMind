@@ -32,7 +32,7 @@ function ImpactPage() {
       </section>
 
       {/* Counters */}
-      <section className="py-24 px-6 bg-foreground text-background">
+      <section className="py-24 px-6">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-16">
           <div className="animate-on-scroll">
             <AnimatedCounter end={25} suffix="%" label="Cost Reduction" colorClass="text-neon-pink" />
@@ -90,7 +90,7 @@ function ImpactPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-24 px-6 bg-foreground text-background text-center">
+      <section className="py-24 px-6 dot-grid text-center">
         <div className="animate-on-scroll max-w-3xl mx-auto">
           <h2 className="font-heading text-4xl md:text-5xl font-bold mb-8">
             Be Part of the <span className="text-neon-yellow">Revolution</span>
