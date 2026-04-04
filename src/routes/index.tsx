@@ -105,10 +105,10 @@ function HomePage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-0">
             {[
-              { icon: <BarChart3 size={32} />, title: "Ingest", desc: "Weather, events, biometrics, history", color: "gradient-pink-blue" },
-              { icon: <Zap size={32} />, title: "Forecast", desc: "AI predicts demand with 95% accuracy", color: "gradient-blue-green" },
-              { icon: <TrendingDown size={32} />, title: "Optimize", desc: "Newsvendor logic minimizes waste cost", color: "gradient-green-blue" },
-              { icon: <ArrowRight size={32} />, title: "Execute", desc: "Real-time cooking recommendations", color: "gradient-yellow-pink" },
+              { icon: <BarChart3 size={32} />, title: "Ingest", desc: "Weather, events, biometrics, history", bg: "gradient-pink-blue" },
+              { icon: <Zap size={32} />, title: "Forecast", desc: "AI predicts demand with 95% accuracy", bg: "gradient-blue-green" },
+              { icon: <TrendingDown size={32} />, title: "Optimize", desc: "Newsvendor logic minimizes waste cost", bg: "gradient-green-blue" },
+              { icon: <ArrowRight size={32} />, title: "Execute", desc: "Real-time cooking recommendations", bg: "gradient-yellow-pink" },
             ].map((step, i) => (
               <div key={i} className="animate-on-scroll" style={{ transitionDelay: `${i * 150}ms` }}>
                 <div className="brutal-shadow p-8 h-full relative bg-background">
