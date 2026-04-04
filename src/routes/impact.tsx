@@ -56,7 +56,7 @@ function ImpactPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="animate-on-scroll border-2 border-neon-pink p-10 card-lift">
+            <div className="animate-on-scroll brutal-shadow border-neon-pink p-10">
               <DollarSign size={32} className="text-neon-pink mb-6" />
               <h3 className="font-heading text-2xl font-bold mb-4">Economic</h3>
               <ul className="space-y-3 text-sm text-muted-foreground">
