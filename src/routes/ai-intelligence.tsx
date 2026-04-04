@@ -74,20 +74,20 @@ function AIIntelligencePage() {
       </section>
 
       {/* Features */}
-      <section className="py-24 px-6">
+      <section className="py-24 px-6 dot-grid">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {features.map((feat, i) => (
               <div
                 key={i}
-                className="animate-on-scroll brutal-shadow p-10"
+                className={`animate-on-scroll brutal-shadow p-10 ${feat.color} text-primary-foreground`}
                 style={{ transitionDelay: `${i * 100}ms` }}
               >
-                <div className={`w-14 h-14 ${feat.color} flex items-center justify-center text-background mb-6`}>
+                <div className="w-14 h-14 bg-background/20 flex items-center justify-center mb-6">
                   {feat.icon}
                 </div>
                 <h3 className="font-heading text-2xl font-bold mb-4">{feat.title}</h3>
-                <p className="text-sm opacity-70 leading-relaxed">{feat.desc}</p>
+                <p className="text-sm opacity-80 leading-relaxed">{feat.desc}</p>
               </div>
             ))}
           </div>

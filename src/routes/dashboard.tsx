@@ -142,28 +142,28 @@ function DashboardPage() {
             {/* Side Panels */}
             <div className="flex flex-col gap-6">
               {/* Waste Reduction */}
-              <div className="brutal-shadow border-neon-green p-6 bg-background">
+              <div className="brutal-shadow p-6 bg-neon-green text-primary-foreground">
                 <div className="flex items-center gap-3 mb-3">
-                  <TrendingDown size={20} className="text-neon-green" />
+                  <TrendingDown size={20} />
                   <span className="text-xs font-bold uppercase tracking-widest">Waste Reduction</span>
                 </div>
-                <div className="font-heading text-4xl font-bold text-gradient-blue-green">{data.waste}%</div>
-                <p className="text-xs text-muted-foreground mt-2">vs. last month baseline</p>
+                <div className="font-heading text-4xl font-bold">{data.waste}%</div>
+                <p className="text-xs opacity-80 mt-2">vs. last month baseline</p>
               </div>
 
               {/* Humidity */}
-              <div className="brutal-shadow border-neon-blue p-6 bg-background">
+              <div className="brutal-shadow p-6 bg-neon-blue text-primary-foreground">
                 <div className="flex items-center gap-3 mb-3">
-                  <Droplets size={20} className="text-neon-blue" />
+                  <Droplets size={20} />
                   <span className="text-xs font-bold uppercase tracking-widest">Humidity</span>
                 </div>
                 <div className="font-heading text-2xl font-bold">{data.humidityLabel}</div>
               </div>
 
               {/* Alert */}
-              <div className="brutal-shadow border-neon-yellow p-6 bg-background">
+              <div className="brutal-shadow p-6 bg-neon-yellow text-foreground">
                 <div className="flex items-center gap-3 mb-3">
-                  <AlertTriangle size={20} className="text-neon-yellow" />
+                  <AlertTriangle size={20} />
                   <span className="text-xs font-bold uppercase tracking-widest">Alert</span>
                 </div>
                 <p className="text-sm font-medium">
@@ -174,9 +174,9 @@ function DashboardPage() {
           </div>
 
           {/* Cooking Recommendation */}
-          <div className="mt-8 brutal-shadow border-neon-pink p-8 bg-background">
+          <div className="mt-8 brutal-shadow p-8 gradient-pink-blue text-primary-foreground">
             <div className="flex items-center gap-3 mb-4">
-              <ChefHat size={24} className="text-neon-pink" />
+              <ChefHat size={24} />
               <span className="text-xs font-bold uppercase tracking-widest">Cooking Recommendation</span>
             </div>
             <p className="font-heading text-xl md:text-2xl font-bold">{data.recommendation}</p>

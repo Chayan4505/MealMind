@@ -62,7 +62,7 @@ function HomePage() {
       </section>
 
       {/* Problem Section */}
-      <section className="py-32 px-6">
+      <section className="py-32 px-6 dot-grid">
         <div className="max-w-7xl mx-auto">
           <div className="animate-on-scroll">
             <h2 className="font-heading text-4xl md:text-6xl font-bold mb-6">
@@ -105,19 +105,19 @@ function HomePage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-0">
             {[
-              { icon: <BarChart3 size={32} />, title: "Ingest", desc: "Weather, events, biometrics, history", color: "gradient-pink-blue" },
-              { icon: <Zap size={32} />, title: "Forecast", desc: "AI predicts demand with 95% accuracy", color: "gradient-blue-green" },
-              { icon: <TrendingDown size={32} />, title: "Optimize", desc: "Newsvendor logic minimizes waste cost", color: "gradient-green-blue" },
-              { icon: <ArrowRight size={32} />, title: "Execute", desc: "Real-time cooking recommendations", color: "gradient-yellow-pink" },
+              { icon: <BarChart3 size={32} />, title: "Ingest", desc: "Weather, events, biometrics, history", bg: "gradient-pink-blue" },
+              { icon: <Zap size={32} />, title: "Forecast", desc: "AI predicts demand with 95% accuracy", bg: "gradient-blue-green" },
+              { icon: <TrendingDown size={32} />, title: "Optimize", desc: "Newsvendor logic minimizes waste cost", bg: "gradient-green-blue" },
+              { icon: <ArrowRight size={32} />, title: "Execute", desc: "Real-time cooking recommendations", bg: "gradient-yellow-pink" },
             ].map((step, i) => (
               <div key={i} className="animate-on-scroll" style={{ transitionDelay: `${i * 150}ms` }}>
-                <div className="brutal-shadow p-8 h-full relative bg-background">
-                  <div className={`w-14 h-14 ${step.color} flex items-center justify-center text-background mb-6`}>
+                 <div className={`brutal-shadow p-8 h-full relative ${step.bg} text-primary-foreground`}>
+                  <div className="w-14 h-14 bg-background/20 flex items-center justify-center mb-6">
                     {step.icon}
                   </div>
-                  <div className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2">Step {i + 1}</div>
+                  <div className="text-xs font-bold uppercase tracking-widest opacity-80 mb-2">Step {i + 1}</div>
                   <h3 className="font-heading text-2xl font-bold mb-3">{step.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{step.desc}</p>
+                  <p className="text-sm opacity-80 leading-relaxed">{step.desc}</p>
                   {i < 3 && (
                     <div className="hidden md:block absolute top-1/2 -right-4 z-10">
                       <ArrowRight size={24} className="text-neon-pink" />
@@ -146,14 +146,14 @@ function HomePage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { label: "Humidity Index", value: "87%", desc: "High humidity = lighter meals", color: "border-neon-blue" },
-              { label: "Exam Season", value: "Active", desc: "College exams shift meal timing", color: "border-neon-pink" },
-              { label: "KAI Score", value: "0.73", desc: "Composite appetite coefficient", color: "border-neon-green" },
+              { label: "Humidity Index", value: "87%", desc: "High humidity = lighter meals", bg: "bg-neon-blue" },
+              { label: "Exam Season", value: "Active", desc: "College exams shift meal timing", bg: "bg-neon-pink" },
+              { label: "KAI Score", value: "0.73", desc: "Composite appetite coefficient", bg: "bg-neon-green" },
             ].map((item, i) => (
-              <div key={i} className={`animate-on-scroll brutal-shadow p-8 text-left`} style={{ transitionDelay: `${i * 150}ms` }}>
-                <div className="text-xs font-bold uppercase tracking-widest opacity-50 mb-2">{item.label}</div>
+              <div key={i} className={`animate-on-scroll brutal-shadow ${item.bg} p-8 text-left text-primary-foreground`} style={{ transitionDelay: `${i * 150}ms` }}>
+                <div className="text-xs font-bold uppercase tracking-widest opacity-80 mb-2">{item.label}</div>
                 <div className="font-heading text-4xl font-bold mb-2">{item.value}</div>
-                <p className="text-sm opacity-60">{item.desc}</p>
+                <p className="text-sm opacity-80">{item.desc}</p>
               </div>
             ))}
           </div>
