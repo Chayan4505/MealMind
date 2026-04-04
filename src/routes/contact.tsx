@@ -22,7 +22,7 @@ function ContactPage() {
         <div className="max-w-7xl mx-auto w-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
             <div className="animate-on-scroll">
-              <div className="inline-block border-2 border-foreground px-4 py-1 mb-6">
+              <div className="inline-block brutal-shadow px-4 py-1 mb-6">
                 <span className="text-xs font-bold uppercase tracking-widest">Get In Touch</span>
               </div>
               <h1 className="font-heading text-5xl md:text-7xl font-bold leading-[0.95] mb-8">
