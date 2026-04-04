@@ -142,13 +142,13 @@ function DashboardPage() {
             {/* Side Panels */}
             <div className="flex flex-col gap-6">
               {/* Waste Reduction */}
-              <div className="brutal-shadow border-neon-green p-6 bg-background">
+              <div className="brutal-shadow p-6 bg-neon-green text-primary-foreground">
                 <div className="flex items-center gap-3 mb-3">
-                  <TrendingDown size={20} className="text-neon-green" />
+                  <TrendingDown size={20} />
                   <span className="text-xs font-bold uppercase tracking-widest">Waste Reduction</span>
                 </div>
-                <div className="font-heading text-4xl font-bold text-gradient-blue-green">{data.waste}%</div>
-                <p className="text-xs text-muted-foreground mt-2">vs. last month baseline</p>
+                <div className="font-heading text-4xl font-bold">{data.waste}%</div>
+                <p className="text-xs opacity-80 mt-2">vs. last month baseline</p>
               </div>
 
               {/* Humidity */}
