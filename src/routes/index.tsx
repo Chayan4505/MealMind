@@ -62,7 +62,7 @@ function HomePage() {
       </section>
 
       {/* Problem Section */}
-      <section className="py-32 px-6 bg-foreground text-background">
+      <section className="py-32 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="animate-on-scroll">
             <h2 className="font-heading text-4xl md:text-6xl font-bold mb-6">
