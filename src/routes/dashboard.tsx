@@ -152,7 +152,7 @@ function DashboardPage() {
               </div>
 
               {/* Humidity */}
-              <div className="border-2 border-neon-blue p-6 bg-background card-lift">
+              <div className="brutal-shadow border-neon-blue p-6 bg-background">
                 <div className="flex items-center gap-3 mb-3">
                   <Droplets size={20} className="text-neon-blue" />
                   <span className="text-xs font-bold uppercase tracking-widest">Humidity</span>
