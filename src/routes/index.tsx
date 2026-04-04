@@ -146,14 +146,14 @@ function HomePage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { label: "Humidity Index", value: "87%", desc: "High humidity = lighter meals", color: "border-neon-blue" },
-              { label: "Exam Season", value: "Active", desc: "College exams shift meal timing", color: "border-neon-pink" },
-              { label: "KAI Score", value: "0.73", desc: "Composite appetite coefficient", color: "border-neon-green" },
+              { label: "Humidity Index", value: "87%", desc: "High humidity = lighter meals", bg: "bg-neon-blue" },
+              { label: "Exam Season", value: "Active", desc: "College exams shift meal timing", bg: "bg-neon-pink" },
+              { label: "KAI Score", value: "0.73", desc: "Composite appetite coefficient", bg: "bg-neon-green" },
             ].map((item, i) => (
-              <div key={i} className={`animate-on-scroll brutal-shadow p-8 text-left`} style={{ transitionDelay: `${i * 150}ms` }}>
-                <div className="text-xs font-bold uppercase tracking-widest opacity-50 mb-2">{item.label}</div>
+              <div key={i} className={`animate-on-scroll brutal-shadow ${item.bg} p-8 text-left text-primary-foreground`} style={{ transitionDelay: `${i * 150}ms` }}>
+                <div className="text-xs font-bold uppercase tracking-widest opacity-80 mb-2">{item.label}</div>
                 <div className="font-heading text-4xl font-bold mb-2">{item.value}</div>
-                <p className="text-sm opacity-60">{item.desc}</p>
+                <p className="text-sm opacity-80">{item.desc}</p>
               </div>
             ))}
           </div>

@@ -174,9 +174,9 @@ function DashboardPage() {
           </div>
 
           {/* Cooking Recommendation */}
-          <div className="mt-8 brutal-shadow border-neon-pink p-8 bg-background">
+          <div className="mt-8 brutal-shadow p-8 gradient-pink-blue text-primary-foreground">
             <div className="flex items-center gap-3 mb-4">
-              <ChefHat size={24} className="text-neon-pink" />
+              <ChefHat size={24} />
               <span className="text-xs font-bold uppercase tracking-widest">Cooking Recommendation</span>
             </div>
             <p className="font-heading text-xl md:text-2xl font-bold">{data.recommendation}</p>
