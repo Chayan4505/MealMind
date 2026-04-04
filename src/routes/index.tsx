@@ -150,7 +150,7 @@ function HomePage() {
               { label: "Exam Season", value: "Active", desc: "College exams shift meal timing", color: "border-neon-pink" },
               { label: "KAI Score", value: "0.73", desc: "Composite appetite coefficient", color: "border-neon-green" },
             ].map((item, i) => (
-              <div key={i} className={`animate-on-scroll border-2 ${item.color} p-8 text-left card-lift`} style={{ transitionDelay: `${i * 150}ms` }}>
+              <div key={i} className={`animate-on-scroll brutal-shadow-light p-8 text-left`} style={{ transitionDelay: `${i * 150}ms` }}>
                 <div className="text-xs font-bold uppercase tracking-widest opacity-50 mb-2">{item.label}</div>
                 <div className="font-heading text-4xl font-bold mb-2">{item.value}</div>
                 <p className="text-sm opacity-60">{item.desc}</p>

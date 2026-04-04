@@ -76,7 +76,7 @@ function ImpactPage() {
               </ul>
             </div>
 
-            <div className="animate-on-scroll border-2 border-neon-blue p-10 card-lift" style={{ transitionDelay: "300ms" }}>
+            <div className="animate-on-scroll brutal-shadow border-neon-blue p-10" style={{ transitionDelay: "300ms" }}>
               <Heart size={32} className="text-neon-blue mb-6" />
               <h3 className="font-heading text-2xl font-bold mb-4">Social</h3>
               <ul className="space-y-3 text-sm text-muted-foreground">

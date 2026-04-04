@@ -116,7 +116,7 @@ function AIIntelligencePage() {
               { label: "KAI", weight: 0.67 },
             ].map((item, i) => (
               <div key={i} className="flex flex-col items-center gap-3">
-                <div className="w-full border-2 border-foreground bg-background relative" style={{ height: "200px" }}>
+                <div className="w-full brutal-shadow bg-background relative" style={{ height: "200px" }}>
                   <div
                     className="absolute bottom-0 left-0 right-0 gradient-pink-blue transition-all duration-1000 ease-out"
                     style={{ height: `${item.weight * 100}%` }}

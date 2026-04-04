@@ -97,7 +97,7 @@ function HowItWorksPage() {
                     {stage.details.map((detail, j) => (
                       <div
                         key={j}
-                        className={`border-2 ${stage.borderColor} px-4 py-3 text-xs font-bold uppercase tracking-widest card-lift`}
+                        className={`${i % 2 === 0 ? 'brutal-shadow' : 'brutal-shadow-light'} px-4 py-3 text-xs font-bold uppercase tracking-widest`}
                       >
                         {detail}
                       </div>
