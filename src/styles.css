@@ -189,6 +189,35 @@
   animation: counter-pulse 2s ease-in-out infinite;
 }
 
+/* Neo-brutalist 3D shadow */
+.brutal-shadow {
+  border: 3px solid oklch(0.13 0.03 265);
+  box-shadow: 5px 5px 0px 0px oklch(0.13 0.03 265);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.brutal-shadow:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0px 0px oklch(0.13 0.03 265);
+}
+
+.brutal-shadow:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px 0px oklch(0.13 0.03 265);
+}
+
+/* Light variant for dark backgrounds */
+.brutal-shadow-light {
+  border: 3px solid oklch(1 0 0 / 0.3);
+  box-shadow: 5px 5px 0px 0px oklch(1 0 0 / 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.brutal-shadow-light:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0px 0px oklch(1 0 0 / 0.2);
+}
+
 /* Card lift */
 .card-lift {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
