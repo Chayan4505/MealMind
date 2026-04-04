@@ -70,7 +70,7 @@ function DashboardPage() {
       <section className="pt-32 pb-20 px-6 dot-grid">
         <div className="max-w-7xl mx-auto">
           <div className="animate-on-scroll">
-            <div className="inline-block border-2 border-foreground px-4 py-1 mb-6">
+            <div className="inline-block brutal-shadow px-4 py-1 mb-6">
               <span className="text-xs font-bold uppercase tracking-widest">Live Dashboard</span>
             </div>
             <h1 className="font-heading text-5xl md:text-7xl font-bold leading-[0.95]">
@@ -109,7 +109,7 @@ function DashboardPage() {
           {/* Dashboard Grid */}
           <div className="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Main Forecast Chart */}
-            <div className="lg:col-span-2 border-2 border-foreground p-8 bg-background">
+            <div className="lg:col-span-2 brutal-shadow p-8 bg-background">
               <div className="flex items-center justify-between mb-8">
                 <div>
                   <div className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Weekly Forecast</div>
@@ -130,7 +130,7 @@ function DashboardPage() {
                   <div key={i} className="flex-1 flex flex-col items-center gap-2">
                     <div className="text-xs font-bold text-muted-foreground">{bar.value}</div>
                     <div
-                      className="w-full gradient-blue-green transition-all duration-700 ease-out"
+                      className="w-full gradient-blue-green transition-all duration-700 ease-out border-2 border-foreground"
                       style={{ height: `${(bar.value / maxVal) * 100}%` }}
                     />
                     <div className="text-xs font-bold uppercase tracking-widest">{bar.day}</div>
@@ -142,7 +142,7 @@ function DashboardPage() {
             {/* Side Panels */}
             <div className="flex flex-col gap-6">
               {/* Waste Reduction */}
-              <div className="border-2 border-neon-green p-6 bg-background card-lift">
+              <div className="brutal-shadow border-neon-green p-6 bg-background">
                 <div className="flex items-center gap-3 mb-3">
                   <TrendingDown size={20} className="text-neon-green" />
                   <span className="text-xs font-bold uppercase tracking-widest">Waste Reduction</span>
@@ -152,7 +152,7 @@ function DashboardPage() {
               </div>
 
               {/* Humidity */}
-              <div className="border-2 border-neon-blue p-6 bg-background card-lift">
+              <div className="brutal-shadow border-neon-blue p-6 bg-background">
                 <div className="flex items-center gap-3 mb-3">
                   <Droplets size={20} className="text-neon-blue" />
                   <span className="text-xs font-bold uppercase tracking-widest">Humidity</span>
@@ -161,7 +161,7 @@ function DashboardPage() {
               </div>
 
               {/* Alert */}
-              <div className="border-2 border-neon-yellow p-6 bg-background card-lift">
+              <div className="brutal-shadow border-neon-yellow p-6 bg-background">
                 <div className="flex items-center gap-3 mb-3">
                   <AlertTriangle size={20} className="text-neon-yellow" />
                   <span className="text-xs font-bold uppercase tracking-widest">Alert</span>
@@ -174,7 +174,7 @@ function DashboardPage() {
           </div>
 
           {/* Cooking Recommendation */}
-          <div className="mt-8 border-2 border-neon-pink p-8 bg-background">
+          <div className="mt-8 brutal-shadow border-neon-pink p-8 bg-background">
             <div className="flex items-center gap-3 mb-4">
               <ChefHat size={24} className="text-neon-pink" />
               <span className="text-xs font-bold uppercase tracking-widest">Cooking Recommendation</span>

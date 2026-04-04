@@ -22,7 +22,7 @@ function HomePage() {
       <section className="relative min-h-screen flex items-center dot-grid pt-16">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
-            <div className="inline-block border-2 border-foreground px-4 py-1 mb-6">
+            <div className="inline-block brutal-shadow px-4 py-1 mb-6">
               <span className="text-xs font-bold uppercase tracking-widest">AI-Powered Food Intelligence</span>
             </div>
             <h1 className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold leading-[0.95] tracking-tight">
@@ -54,7 +54,7 @@ function HomePage() {
               alt="EcoFeast Engine - Kolkata cityscape with AI data visualization"
               width={1920}
               height={1080}
-              className="w-full border-2 border-foreground shadow-2xl"
+              className="w-full brutal-shadow"
             />
             <div className="absolute -bottom-4 -right-4 w-full h-full border-2 border-neon-pink -z-10" />
           </div>
@@ -111,7 +111,7 @@ function HomePage() {
               { icon: <ArrowRight size={32} />, title: "Execute", desc: "Real-time cooking recommendations", color: "gradient-yellow-pink" },
             ].map((step, i) => (
               <div key={i} className="animate-on-scroll" style={{ transitionDelay: `${i * 150}ms` }}>
-                <div className="border-2 border-foreground p-8 h-full card-lift relative">
+                <div className="brutal-shadow p-8 h-full relative bg-background">
                   <div className={`w-14 h-14 ${step.color} flex items-center justify-center text-background mb-6`}>
                     {step.icon}
                   </div>
@@ -134,7 +134,7 @@ function HomePage() {
       <section className="py-32 px-6 bg-foreground text-background">
         <div className="max-w-7xl mx-auto text-center">
           <div className="animate-on-scroll">
-            <div className="inline-block border-2 border-neon-yellow px-4 py-1 mb-6">
+            <div className="inline-block brutal-shadow-light px-4 py-1 mb-6">
               <span className="text-xs font-bold uppercase tracking-widest text-neon-yellow">Innovation Spotlight</span>
             </div>
             <h2 className="font-heading text-4xl md:text-6xl font-bold mb-8">
@@ -150,7 +150,7 @@ function HomePage() {
               { label: "Exam Season", value: "Active", desc: "College exams shift meal timing", color: "border-neon-pink" },
               { label: "KAI Score", value: "0.73", desc: "Composite appetite coefficient", color: "border-neon-green" },
             ].map((item, i) => (
-              <div key={i} className={`animate-on-scroll border-2 ${item.color} p-8 text-left card-lift`} style={{ transitionDelay: `${i * 150}ms` }}>
+              <div key={i} className={`animate-on-scroll brutal-shadow-light p-8 text-left`} style={{ transitionDelay: `${i * 150}ms` }}>
                 <div className="text-xs font-bold uppercase tracking-widest opacity-50 mb-2">{item.label}</div>
                 <div className="font-heading text-4xl font-bold mb-2">{item.value}</div>
                 <p className="text-sm opacity-60">{item.desc}</p>

@@ -66,7 +66,7 @@ function HowItWorksPage() {
       <section className="pt-32 pb-20 px-6 dot-grid">
         <div className="max-w-7xl mx-auto">
           <div className="animate-on-scroll">
-            <div className="inline-block border-2 border-foreground px-4 py-1 mb-6">
+            <div className="inline-block brutal-shadow px-4 py-1 mb-6">
               <span className="text-xs font-bold uppercase tracking-widest">System Architecture</span>
             </div>
             <h1 className="font-heading text-5xl md:text-7xl font-bold leading-[0.95]">
@@ -97,7 +97,7 @@ function HowItWorksPage() {
                     {stage.details.map((detail, j) => (
                       <div
                         key={j}
-                        className={`border-2 ${stage.borderColor} px-4 py-3 text-xs font-bold uppercase tracking-widest card-lift`}
+                        className={`${i % 2 === 0 ? 'brutal-shadow' : 'brutal-shadow-light'} px-4 py-3 text-xs font-bold uppercase tracking-widest`}
                       >
                         {detail}
                       </div>

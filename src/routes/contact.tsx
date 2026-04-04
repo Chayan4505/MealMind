@@ -22,7 +22,7 @@ function ContactPage() {
         <div className="max-w-7xl mx-auto w-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
             <div className="animate-on-scroll">
-              <div className="inline-block border-2 border-foreground px-4 py-1 mb-6">
+              <div className="inline-block brutal-shadow px-4 py-1 mb-6">
                 <span className="text-xs font-bold uppercase tracking-widest">Get In Touch</span>
               </div>
               <h1 className="font-heading text-5xl md:text-7xl font-bold leading-[0.95] mb-8">
@@ -36,7 +36,7 @@ function ContactPage() {
 
               <div className="space-y-6">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 gradient-pink-blue flex items-center justify-center">
+                  <div className="w-12 h-12 gradient-pink-blue brutal-shadow flex items-center justify-center">
                     <Mail size={20} className="text-background" />
                   </div>
                   <div>
@@ -45,7 +45,7 @@ function ContactPage() {
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 gradient-blue-green flex items-center justify-center">
+                  <div className="w-12 h-12 gradient-blue-green brutal-shadow flex items-center justify-center">
                     <MapPin size={20} className="text-background" />
                   </div>
                   <div>
@@ -54,7 +54,7 @@ function ContactPage() {
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 gradient-green-blue flex items-center justify-center">
+                  <div className="w-12 h-12 gradient-green-blue brutal-shadow flex items-center justify-center">
                     <Phone size={20} className="text-background" />
                   </div>
                   <div>
@@ -67,13 +67,13 @@ function ContactPage() {
 
             <div className="animate-slide-right">
               {submitted ? (
-                <div className="border-2 border-neon-green p-12 text-center">
+                <div className="brutal-shadow border-neon-green p-12 text-center">
                   <div className="font-heading text-3xl font-bold mb-4 text-gradient-blue-green">Thank You!</div>
                   <p className="text-muted-foreground">We'll be in touch shortly.</p>
                 </div>
               ) : (
                 <form
-                  className="border-2 border-foreground p-10 space-y-6"
+                  className="brutal-shadow p-10 space-y-6 bg-background"
                   onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}
                 >
                   <div>
@@ -81,7 +81,7 @@ function ContactPage() {
                     <input
                       type="text"
                       required
-                      className="w-full border-2 border-foreground bg-background px-4 py-3 text-sm font-medium focus:outline-none focus:border-neon-pink transition-colors"
+                      className="w-full brutal-shadow bg-background px-4 py-3 text-sm font-medium focus:outline-none focus:border-neon-pink transition-colors"
                       placeholder="Your name"
                     />
                   </div>
@@ -90,7 +90,7 @@ function ContactPage() {
                     <input
                       type="email"
                       required
-                      className="w-full border-2 border-foreground bg-background px-4 py-3 text-sm font-medium focus:outline-none focus:border-neon-pink transition-colors"
+                      className="w-full brutal-shadow bg-background px-4 py-3 text-sm font-medium focus:outline-none focus:border-neon-pink transition-colors"
                       placeholder="you@company.com"
                     />
                   </div>
@@ -98,7 +98,7 @@ function ContactPage() {
                     <label className="text-xs font-bold uppercase tracking-widest block mb-2">Organization</label>
                     <input
                       type="text"
-                      className="w-full border-2 border-foreground bg-background px-4 py-3 text-sm font-medium focus:outline-none focus:border-neon-pink transition-colors"
+                      className="w-full brutal-shadow bg-background px-4 py-3 text-sm font-medium focus:outline-none focus:border-neon-pink transition-colors"
                       placeholder="Your organization"
                     />
                   </div>
@@ -107,7 +107,7 @@ function ContactPage() {
                     <textarea
                       required
                       rows={4}
-                      className="w-full border-2 border-foreground bg-background px-4 py-3 text-sm font-medium focus:outline-none focus:border-neon-pink transition-colors resize-none"
+                      className="w-full brutal-shadow bg-background px-4 py-3 text-sm font-medium focus:outline-none focus:border-neon-pink transition-colors resize-none"
                       placeholder="Tell us about your kitchen operations..."
                     />
                   </div>

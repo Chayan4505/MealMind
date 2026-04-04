@@ -46,7 +46,7 @@ function AIIntelligencePage() {
       <section className="pt-32 pb-20 px-6 dot-grid">
         <div className="max-w-7xl mx-auto">
           <div className="animate-on-scroll">
-            <div className="inline-block border-2 border-foreground px-4 py-1 mb-6">
+            <div className="inline-block brutal-shadow px-4 py-1 mb-6">
               <span className="text-xs font-bold uppercase tracking-widest">AI Architecture</span>
             </div>
             <h1 className="font-heading text-5xl md:text-7xl font-bold leading-[0.95]">
@@ -66,7 +66,7 @@ function AIIntelligencePage() {
               loading="lazy"
               width={1200}
               height={800}
-              className="w-full border-2 border-foreground"
+              className="w-full brutal-shadow"
             />
             <div className="absolute -bottom-4 -left-4 w-full h-full border-2 border-neon-blue -z-10" />
           </div>
@@ -80,7 +80,7 @@ function AIIntelligencePage() {
             {features.map((feat, i) => (
               <div
                 key={i}
-                className="animate-on-scroll border-2 border-background/20 p-10 card-lift"
+                className="animate-on-scroll brutal-shadow-light p-10"
                 style={{ transitionDelay: `${i * 100}ms` }}
               >
                 <div className={`w-14 h-14 ${feat.color} flex items-center justify-center text-background mb-6`}>
@@ -116,7 +116,7 @@ function AIIntelligencePage() {
               { label: "KAI", weight: 0.67 },
             ].map((item, i) => (
               <div key={i} className="flex flex-col items-center gap-3">
-                <div className="w-full border-2 border-foreground bg-background relative" style={{ height: "200px" }}>
+                <div className="w-full brutal-shadow bg-background relative" style={{ height: "200px" }}>
                   <div
                     className="absolute bottom-0 left-0 right-0 gradient-pink-blue transition-all duration-1000 ease-out"
                     style={{ height: `${item.weight * 100}%` }}

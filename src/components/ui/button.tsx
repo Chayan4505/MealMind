@@ -5,28 +5,28 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-bold uppercase tracking-wider transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 group",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-bold uppercase tracking-wider transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 group brutal-shadow",
   {
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground shadow-md hover:shadow-xl hover:scale-[1.02]",
+          "bg-primary text-primary-foreground",
         destructive:
-          "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
+          "bg-destructive text-destructive-foreground",
         outline:
-          "border-2 border-foreground bg-background text-foreground hover:bg-foreground hover:text-background",
+          "bg-background text-foreground hover:bg-foreground hover:text-background",
         secondary:
-          "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
+          "bg-secondary text-secondary-foreground",
+        ghost: "hover:bg-accent hover:text-accent-foreground border-transparent shadow-none hover:shadow-none",
+        link: "text-primary underline-offset-4 hover:underline border-transparent shadow-none hover:shadow-none",
         neonPink:
-          "gradient-pink-blue text-primary-foreground shadow-md glow-pink hover:scale-[1.02]",
+          "gradient-pink-blue text-primary-foreground",
         neonBlue:
-          "gradient-blue-green text-primary-foreground shadow-md glow-blue hover:scale-[1.02]",
+          "gradient-blue-green text-primary-foreground",
         neonGreen:
-          "gradient-green-blue text-primary-foreground shadow-md glow-green hover:scale-[1.02]",
+          "gradient-green-blue text-primary-foreground",
         neonYellow:
-          "gradient-yellow-pink text-foreground shadow-md glow-pink hover:scale-[1.02]",
+          "gradient-yellow-pink text-foreground",
       },
       size: {
         default: "h-11 px-6 py-2",

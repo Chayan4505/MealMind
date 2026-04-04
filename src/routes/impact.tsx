@@ -20,7 +20,7 @@ function ImpactPage() {
       <section className="pt-32 pb-20 px-6 dot-grid">
         <div className="max-w-7xl mx-auto">
           <div className="animate-on-scroll">
-            <div className="inline-block border-2 border-foreground px-4 py-1 mb-6">
+            <div className="inline-block brutal-shadow px-4 py-1 mb-6">
               <span className="text-xs font-bold uppercase tracking-widest">Measured Impact</span>
             </div>
             <h1 className="font-heading text-5xl md:text-7xl font-bold leading-[0.95]">
@@ -56,7 +56,7 @@ function ImpactPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="animate-on-scroll border-2 border-neon-pink p-10 card-lift">
+            <div className="animate-on-scroll brutal-shadow border-neon-pink p-10">
               <DollarSign size={32} className="text-neon-pink mb-6" />
               <h3 className="font-heading text-2xl font-bold mb-4">Economic</h3>
               <ul className="space-y-3 text-sm text-muted-foreground">
@@ -66,7 +66,7 @@ function ImpactPage() {
               </ul>
             </div>
 
-            <div className="animate-on-scroll border-2 border-neon-green p-10 card-lift" style={{ transitionDelay: "150ms" }}>
+            <div className="animate-on-scroll brutal-shadow border-neon-green p-10" style={{ transitionDelay: "150ms" }}>
               <Leaf size={32} className="text-neon-green mb-6" />
               <h3 className="font-heading text-2xl font-bold mb-4">Environmental</h3>
               <ul className="space-y-3 text-sm text-muted-foreground">
@@ -76,7 +76,7 @@ function ImpactPage() {
               </ul>
             </div>
 
-            <div className="animate-on-scroll border-2 border-neon-blue p-10 card-lift" style={{ transitionDelay: "300ms" }}>
+            <div className="animate-on-scroll brutal-shadow border-neon-blue p-10" style={{ transitionDelay: "300ms" }}>
               <Heart size={32} className="text-neon-blue mb-6" />
               <h3 className="font-heading text-2xl font-bold mb-4">Social</h3>
               <ul className="space-y-3 text-sm text-muted-foreground">
