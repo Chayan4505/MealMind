@@ -1,0 +1,27 @@
+# ── docker-compose.yml ──────────────────────────────
+# Run everything with: docker-compose up
+
+version: "3.9"
+
+services:
+
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./ecofeast_model:/app/ecofeast_model
+      - ./ecofeast_features:/app/ecofeast_features
+      - ./ecofeast_dataset:/app/ecofeast_dataset
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+
+  # Serve the dashboard as a static file
+  dashboard:
+    image: nginx:alpine
+    ports:
+      - "3000:80"
+    volumes:
+      - ./dashboard.html:/usr/share/nginx/html/index.html
+    restart: unless-stopped

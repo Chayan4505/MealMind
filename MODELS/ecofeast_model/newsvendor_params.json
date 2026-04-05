@@ -1,0 +1,6 @@
+{
+  "cost_per_plate": 45.0,
+  "price_per_plate": 80.0,
+  "salvage_per_plate": 5.0,
+  "critical_ratio": 0.4667
+}

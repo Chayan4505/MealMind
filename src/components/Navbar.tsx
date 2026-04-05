@@ -13,17 +13,23 @@ import {
   DropdownMenuGroup
 } from "@/components/ui/dropdown-menu";
 
-const publicLinks = [
+interface NavLink {
+  to: string;
+  label: string;
+  hash?: string;
+}
+
+const publicLinks: NavLink[] = [
   { to: "/", label: "Home" },
   { to: "/how-it-works", label: "How It Works" },
   { to: "/ai-intelligence", label: "AI Intelligence" },
   { to: "/impact", label: "Impact" },
 ];
 
-const authLinks = [
+const authLinks: NavLink[] = [
   { to: "/dashboard", label: "Overview" },
   { to: "/menu", label: "Menu" },
-  { to: "/forecast", label: "Forecast" },
+  { to: "/simulation", label: "Simulation" },
   { to: "/procurement", label: "Procure" },
   { to: "/feedback", label: "Log Waste" },
 ];
@@ -46,10 +52,11 @@ export function Navbar() {
         <div className="hidden lg:flex items-center gap-1">
           {displayedLinks.map((link) => (
             <Link
-              key={link.to}
+              key={link.to + (link.hash || "")}
               to={link.to}
+              hash={link.hash}
               className={`px-4 py-2 text-xs font-bold uppercase tracking-widest transition-colors ${
-                location.pathname === link.to
+                location.pathname === link.to && !link.hash
                   ? "text-neon-pink"
                   : "text-muted-foreground hover:text-foreground"
               }`}
@@ -113,8 +120,9 @@ export function Navbar() {
         <div className="lg:hidden bg-background border-b border-border px-6 py-4 flex flex-col gap-2">
           {displayedLinks.map((link) => (
             <Link
-              key={link.to}
+              key={link.to + (link.hash || "")}
               to={link.to}
+              hash={link.hash}
               className="py-2 text-sm font-bold uppercase tracking-widest text-muted-foreground hover:text-foreground"
               onClick={() => setOpen(false)}
             >

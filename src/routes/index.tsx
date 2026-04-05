@@ -103,7 +103,7 @@ function HomePage() {
               From raw data to optimized cooking instructions in real-time.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-0">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {[
               { icon: <BarChart3 size={32} />, title: "Ingest", desc: "Weather, events, biometrics, history", bg: "gradient-pink-blue" },
               { icon: <Zap size={32} />, title: "Forecast", desc: "AI predicts demand with 95% accuracy", bg: "gradient-blue-green" },
@@ -119,8 +119,10 @@ function HomePage() {
                   <h3 className="font-heading text-2xl font-bold mb-3">{step.title}</h3>
                   <p className="text-sm opacity-80 leading-relaxed">{step.desc}</p>
                   {i < 3 && (
-                    <div className="hidden md:block absolute top-1/2 -right-4 z-10">
-                      <ArrowRight size={24} className="text-neon-pink" />
+                    <div className="hidden md:flex absolute top-1/2 -right-6 z-20 items-center justify-center translate-y-[-50%] pointer-events-none">
+                      <div className="bg-background/90 p-2 rounded-full border-2 border-slate-950 brutal-shadow-xs rotate-[-3deg]">
+                        <ArrowRight size={28} className="text-slate-950 font-black" strokeWidth={4} />
+                      </div>
                     </div>
                   )}
                 </div>

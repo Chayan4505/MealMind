@@ -20,6 +20,7 @@ function HowItWorksPage() {
       icon: <Cloud size={32} />,
       color: "gradient-pink-blue",
       borderColor: "border-neon-pink",
+      image: "/data_ingestion_stage_1775339603549.png"
     },
     {
       num: "02",
@@ -29,6 +30,7 @@ function HowItWorksPage() {
       icon: <BarChart3 size={32} />,
       color: "gradient-blue-green",
       borderColor: "border-neon-blue",
+      image: "/feature_engineering_stage_1775339680193.png"
     },
     {
       num: "03",
@@ -38,6 +40,7 @@ function HowItWorksPage() {
       icon: <Brain size={32} />,
       color: "gradient-green-blue",
       borderColor: "border-neon-green",
+      image: "/ai_forecasting_stage_1775339621003.png"
     },
     {
       num: "04",
@@ -47,6 +50,7 @@ function HowItWorksPage() {
       icon: <Cpu size={32} />,
       color: "gradient-yellow-pink",
       borderColor: "border-neon-yellow",
+      image: "/optimization_stage_newsvendor_1775339638479.png"
     },
     {
       num: "05",
@@ -56,6 +60,7 @@ function HowItWorksPage() {
       icon: <LineChart size={32} />,
       color: "gradient-pink-blue",
       borderColor: "border-neon-pink",
+      image: "/kitchen_execution_stage_1775339658420.png"
     },
   ];
 
@@ -107,19 +112,17 @@ function HowItWorksPage() {
               </div>
               <div className={i % 2 === 1 ? "lg:order-1" : ""}>
                 <div className="animate-slide-right">
-                  <div className={`w-full aspect-square ${stage.color} flex items-center justify-center relative`}>
-                    <div className="text-background/20">
-                      {/* Large decorative icon */}
-                      <svg width="200" height="200" viewBox="0 0 200 200" fill="none" className="opacity-30">
-                        <rect x="20" y="20" width="160" height="160" stroke="currentColor" strokeWidth="2" />
-                        <rect x="40" y="40" width="120" height="120" stroke="currentColor" strokeWidth="2" />
-                        <rect x="60" y="60" width="80" height="80" stroke="currentColor" strokeWidth="2" />
-                        <line x1="100" y1="20" x2="100" y2="180" stroke="currentColor" strokeWidth="1" />
-                        <line x1="20" y1="100" x2="180" y2="100" stroke="currentColor" strokeWidth="1" />
-                      </svg>
-                    </div>
-                    <div className="absolute inset-0 flex items-center justify-center text-background">
-                      {stage.icon}
+                  <div className={`w-full aspect-video ${stage.color} flex items-center justify-center relative brutal-shadow border-4 border-foreground overflow-hidden`}>
+                    <img 
+                      src={stage.image} 
+                      alt={stage.title} 
+                      className="w-full h-full object-cover mix-blend-overlay opacity-80" 
+                    />
+                    <div className="absolute inset-0 bg-background/20 backdrop-blur-[2px]" />
+                    <div className="absolute inset-0 flex items-center justify-center text-background drop-shadow-2xl">
+                      <div className="p-4 bg-foreground/60 backdrop-blur-md border-2 border-background/20 brutal-shadow-xs scale-150">
+                        {stage.icon}
+                      </div>
                     </div>
                   </div>
                 </div>

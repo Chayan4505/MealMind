@@ -4,7 +4,22 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Navbar } from "@/components/Navbar";
-import { ArrowRight, Store, Upload, FileImage, Sparkles, Check } from "lucide-react";
+import { Slider } from "@/components/ui/slider";
+import { Switch } from "@/components/ui/switch";
+import { 
+  Store, 
+  MapPin, 
+  ArrowRight, 
+  ArrowLeft, 
+  Users, 
+  IndianRupee, 
+  ShieldAlert, 
+  Zap, 
+  Calendar,
+  CheckCircle2,
+  Navigation,
+  Sparkles
+} from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 
 export const Route = createFileRoute("/setup")({
@@ -12,152 +27,66 @@ export const Route = createFileRoute("/setup")({
 });
 
 function SetupPage() {
-  const { user, updateRestaurantName, updateProfileData, isLoading } = useAuth();
-  const [restaurantName, setRestaurantName] = useState("");
-  const [imageFile, setImageFile] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [isExtracting, setIsExtracting] = useState(false);
-  const [extractedItems, setExtractedItems] = useState<string[]>([]);
-  const [step, setStep] = useState<1 | 2>(1);
+  const { user, updateProfileData, isLoading } = useAuth();
   const navigate = useNavigate();
+  
+  // Registration State
+  const [step, setStep] = useState<1 | 2 | 3>(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Form Fields
+  const [formData, setFormData] = useState({
+    kitchenName: "",
+    location: null as { lat: number, lon: number } | null,
+    maxCapacity: "",
+    plateCost: "",
+    shortageSensitivity: [3],
+    syncHolidays: true,
+    activateKAI: true
+  });
 
   useEffect(() => {
     if (!isLoading && !user) {
       navigate({ to: "/login" });
     }
-    // Automatically redirect users who have already set their restaurant 
-    // IF they haven't explicitly started an upload process in this session.
-    if (user && user.user_metadata?.restaurant_name && !isExtracting && step === 1) {
-      if (!imageFile) {
-        navigate({ to: "/dashboard" });
-      }
+    // Only auto-redirect if they've finished the setup before
+    if (user && user.user_metadata?.setup_complete) {
+      navigate({ to: "/dashboard" });
     }
-  }, [user, isLoading, navigate, isExtracting, step, imageFile]);
+  }, [user, isLoading, navigate]);
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      setImageFile(file);
-      const reader = new FileReader();
-      reader.onloadend = () => setImagePreview(reader.result as string);
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const extractMenuWithGemini = async (base64Image: string) => {
-    const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
-
-    // If the API Key isn't provided yet, mock the Gemini extraction for demo purposes
-    if (!GEMINI_API_KEY) {
-      return new Promise<string[]>((resolve) => {
-        setTimeout(() => {
-          resolve([
-            "Hyderabadi Chicken Dum Biryani",
-            "Mutton Rogan Josh",
-            "Paneer Butter Masala",
-            "Garlic Butter Naan",
-            "Tandoori Roti",
-            "Crispy Masala Dosa",
-            "Gulab Jamun (2 pcs)"
-          ]);
-        }, 2000);
+  const handleAutoDetect = () => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        setFormData(prev => ({
+          ...prev,
+          location: { lat: position.coords.latitude, lon: position.coords.longitude }
+        }));
       });
     }
-
-    // Actual active Gemini API Request
-    try {
-      // Strip the internal data string prefix
-      const base64Data = base64Image.split(',')[1];
-      const mimeType = imageFile?.type || "image/jpeg";
-
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{
-            parts: [
-              { text: "Extract all the menu items from this image and list them clearly as plain text. Do not use markdown (no asterisks). Return just one item per line." },
-              { inline_data: { mime_type: mimeType, data: base64Data } }
-            ]
-          }]
-        })
-      });
-
-      const data = await response.json();
-
-      if (data.error) {
-        console.error("Setup API Error:", data.error);
-        return [`API Failed: ${data.error.message}`];
-      }
-
-      if (!data.candidates || !data.candidates[0]) {
-        return ["Error: Unrecognized image or blocked by safety."];
-      }
-
-      const text = data.candidates[0].content.parts[0].text;
-      return text.split('\n').filter((item: string) => item.trim() !== '');
-    } catch (error: any) {
-      console.error("Gemini Extraction Error:", error);
-      return [`App Error: ${error.message || "Failed to contact Google API."}`];
-    }
   };
 
-  const handleProcessMenu = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!restaurantName.trim() || !imagePreview) return;
-
-    setIsExtracting(true);
-    // Convert to Base64 to pass to Gemini API Vision Model
-    const items = await extractMenuWithGemini(imagePreview);
-    setExtractedItems(items);
-    setIsExtracting(false);
-    setStep(2);
-  };
-
-  const generateProcurementForMenu = async (menuList: string[]) => {
-    const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
-    if (!GEMINI_API_KEY) {
-       return [
-          { ingredient: "Chicken (Raw)", buyQty: "45 kg", cookQty: "~38 kg" },
-          { ingredient: "Basmati Rice", buyQty: "From Inventory", cookQty: "90 kg" },
-          { ingredient: "Vegetables (Mixed)", buyQty: "20 kg", cookQty: "20 kg" }
-        ];
-    }
+  const handleLaunch = async () => {
+    setIsSubmitting(true);
     
-    try {
-       const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-             contents: [{ parts: [{ text: `We are predicting demand for 450 meals today based heavily on this specific menu: ${menuList.join(", ")}. Give me a raw materials list of precisely 4 major food ingredients required to cook these menu items. Return ONLY a valid JSON array of objects taking this exact string schema shape: [{"ingredient": "string", "buyQty": "string", "cookQty": "string"}]. Do NOT wrap in markdown tags or add any text outside the JSON array.` }] }]
-          })
-       });
-       const data = await response.json();
-       if (data.candidates && data.candidates[0]) {
-           let text = data.candidates[0].content.parts[0].text;
-           text = text.replace(/```json/g, "").replace(/```/g, "").trim();
-           return JSON.parse(text);
-       }
-    } catch(err) {
-       console.error("Procurement Gen Error:", err);
-    }
-    return [];
-  };
-
-  const handleFinalize = async () => {
-    setIsExtracting(true);
-    const rawMaterials = await generateProcurementForMenu(extractedItems);
+    // Save to Supabase Auth metadata
     await updateProfileData({
-      restaurant_name: restaurantName,
-      menu_items: extractedItems,
-      raw_materials: rawMaterials
+      restaurant_name: formData.kitchenName,
+      max_capacity: parseInt(formData.maxCapacity),
+      avg_plate_cost: parseFloat(formData.plateCost),
+      shortage_sensitivity: formData.shortageSensitivity[0],
+      smart_sync: formData.syncHolidays,
+      kai_active: formData.activateKAI,
+      coordinates: formData.location,
+      setup_complete: true
     });
-    setIsExtracting(false);
+
+    setIsSubmitting(false);
     navigate({ to: "/dashboard" });
   };
 
   if (isLoading || !user) {
-    return <div className="min-h-screen bg-background flex items-center justify-center text-neon-pink font-bold uppercase tracking-widest text-sm">Authenticating...</div>;
+    return <div className="min-h-screen bg-background flex items-center justify-center font-black uppercase text-xs tracking-widest text-neon-pink">Authenticating...</div>;
   }
 
   return (
@@ -165,114 +94,207 @@ function SetupPage() {
       <Navbar />
 
       <div className="flex-1 flex flex-col items-center justify-center p-6 mt-10">
+        <div className="w-full max-w-2xl brutal-shadow bg-card border-none ring-4 ring-foreground relative overflow-hidden">
+          
+          {/* Progress Indicator */}
+          <div className="h-2 w-full bg-foreground/10">
+            <div 
+              className="h-full bg-neon-pink transition-all duration-700" 
+              style={{ width: `${(step / 3) * 100}%` }}
+            />
+          </div>
 
-        {step === 1 && (
-          <div className="w-full max-w-lg brutal-shadow bg-card p-8 animate-on-scroll visible">
-            <div className="flex flex-col items-center mb-8 text-center">
-              <div className="w-16 h-16 bg-neon-yellow flex items-center justify-center mb-4 brutal-shadow-light text-primary-foreground">
-                <Store size={32} />
-              </div>
-              <h1 className="font-heading text-3xl md:text-4xl font-bold font-google-sans">Register Kitchen</h1>
-              <p className="text-muted-foreground mt-2 text-sm">
-                Name your restaurant and upload a photo of your existing menu to automatically digitize it with <b>Gemini AI</b>.
-              </p>
-            </div>
+          <div className="p-10">
+            {/* STEP 1: IDENTITY & LOCATION */}
+            {step === 1 && (
+              <div className="animate-in fade-in slide-in-from-right-8 duration-500">
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="bg-neon-yellow p-4 brutal-shadow-light border-2 border-foreground">
+                    <Store size={32} />
+                  </div>
+                  <div>
+                    <h2 className="font-heading text-3xl font-bold uppercase italic italic">Identity & Location</h2>
+                    <p className="text-[10px] font-black uppercase opacity-50 tracking-widest mt-1">Foundation Strategy</p>
+                  </div>
+                </div>
 
-            <form onSubmit={handleProcessMenu} className="space-y-6">
-              <div className="space-y-2 text-left">
-                <Label htmlFor="restaurantName">Restaurant Name</Label>
-                <Input
-                  id="restaurantName"
-                  placeholder="e.g. Spice Kitchen Co."
-                  required
-                  value={restaurantName}
-                  onChange={(e) => setRestaurantName(e.target.value)}
-                  className="brutal-shadow"
-                />
-              </div>
+                <div className="space-y-8">
+                  <div className="space-y-3">
+                    <Label className="text-[10px] font-black uppercase tracking-widest opacity-60">Kitchen / Canteen Name</Label>
+                    <Input 
+                      placeholder="e.g. MAKAUT Central Canteen" 
+                      value={formData.kitchenName}
+                      onChange={(e) => setFormData(p => ({ ...p, kitchenName: e.target.value }))}
+                      className="h-14 brutal-shadow font-bold text-lg border-2"
+                    />
+                  </div>
 
-              <div className="space-y-2 text-left">
-                <Label>Upload Physical Menu (JPG/PNG)</Label>
-                <div className="border-4 border-dashed border-foreground p-6 text-center hover:bg-muted/50 transition-colors cursor-pointer relative brutal-shadow-light overflow-hidden bg-background">
-                  <input
-                    type="file"
-                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    required
-                  />
-                  {!imagePreview ? (
-                    <div className="flex flex-col items-center">
-                      <Upload size={32} className="mb-2 text-neon-pink" />
-                      <span className="text-sm font-bold uppercase tracking-widest">Select Image</span>
+                  <div className="p-6 bg-background border-4 border-foreground brutal-shadow-dark flex items-center justify-between">
+                    <div>
+                      <h4 className="font-black uppercase text-sm mb-1 italic">Weather Syncing</h4>
+                      <p className="text-[10px] font-bold opacity-50 uppercase max-w-[200px]">IMD Local Grid Data Mapping</p>
                     </div>
-                  ) : (
-                    <div className="flex flex-col items-center">
-                      <FileImage size={32} className="mb-2 text-neon-blue" />
-                      <span className="text-sm font-bold uppercase tracking-widest text-neon-blue">Menu Attached</span>
-                      <img src={imagePreview} alt="Menu Preview" className="mt-4 max-h-32 border-2 border-foreground object-contain" />
-                    </div>
-                  )}
+                    <Button 
+                      variant={formData.location ? "outline" : "neonPink"}
+                      onClick={handleAutoDetect}
+                      className="h-14 px-8 border-2 brutal-shadow"
+                    >
+                      {formData.location ? (
+                        <><CheckCircle2 size={18} className="mr-2 text-neon-green" /> Detected</>
+                      ) : (
+                        <><Navigation size={18} className="mr-2" /> Auto-Detect</>
+                      )}
+                    </Button>
+                  </div>
+
+                  <Button 
+                    onClick={() => setStep(2)} 
+                    disabled={!formData.kitchenName}
+                    className="w-full h-16 bg-foreground text-background font-black uppercase italic tracking-widest text-lg brutal-shadow hover:bg-neon-pink transition-all"
+                  >
+                    Next Phase <ArrowRight size={20} className="ml-2" />
+                  </Button>
                 </div>
               </div>
+            )}
 
-              <Button
-                type="submit"
-                variant="neonPink"
-                className="w-full h-14 text-md mt-4 relative overflow-hidden"
-                disabled={isExtracting || !restaurantName || !imagePreview}
-              >
-                {isExtracting ? (
-                  <span className="flex items-center"><Sparkles className="mr-2 animate-pulse" size={18} /> Extracting via Gemini AI...</span>
-                ) : (
-                  <span className="flex items-center">Scan Menu Items <ArrowRight className="ml-2 arrow-move" /></span>
-                )}
-              </Button>
-            </form>
-          </div>
-        )}
+            {/* STEP 2: OPERATIONS */}
+            {step === 2 && (
+              <div className="animate-in fade-in slide-in-from-right-8 duration-500">
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="bg-neon-blue p-4 brutal-shadow-light border-2 border-foreground">
+                    <Zap size={32} className="text-white" />
+                  </div>
+                  <div>
+                    <h2 className="font-heading text-3xl font-bold uppercase italic">Operational Math</h2>
+                    <p className="text-[10px] font-black uppercase opacity-50 tracking-widest mt-1">Calibration Engine</p>
+                  </div>
+                </div>
 
-        {step === 2 && (
-          <div className="w-full max-w-lg brutal-shadow bg-card p-8 animate-on-scroll visible">
-            <div className="flex flex-col items-center mb-6 text-center">
-              <div className="w-16 h-16 bg-neon-green flex items-center justify-center mb-4 brutal-shadow-light text-primary-foreground">
-                <Sparkles size={32} />
+                <div className="space-y-8">
+                  <div className="grid grid-cols-2 gap-6">
+                    <div className="space-y-3">
+                      <Label className="text-[10px] font-black uppercase tracking-widest opacity-60">Max Daily Capacity</Label>
+                      <div className="relative">
+                        <Users size={16} className="absolute left-4 top-1/2 -translate-y-1/2 opacity-40" />
+                        <Input 
+                          type="number" 
+                          placeholder="450" 
+                          className="h-14 pl-12 border-2 brutal-shadow font-black text-xl"
+                          value={formData.maxCapacity}
+                          onChange={(e) => setFormData(p => ({ ...p, maxCapacity: e.target.value }))}
+                        />
+                      </div>
+                    </div>
+                    <div className="space-y-3">
+                      <Label className="text-[10px] font-black uppercase tracking-widest opacity-60">Avg Plate Cost (₹)</Label>
+                      <div className="relative">
+                        <IndianRupee size={16} className="absolute left-4 top-1/2 -translate-y-1/2 opacity-40" />
+                        <Input 
+                          type="number" 
+                          placeholder="85" 
+                          className="h-14 pl-12 border-2 brutal-shadow font-black text-xl"
+                          value={formData.plateCost}
+                          onChange={(e) => setFormData(p => ({ ...p, plateCost: e.target.value }))}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-8 border-4 border-foreground brutal-shadow-dark bg-background">
+                    <div className="flex justify-between items-end mb-4">
+                      <Label className="text-[10px] font-black uppercase tracking-widest opacity-60">Shortage Sensitivity</Label>
+                      <div className="flex gap-1">
+                        {[1,2,3,4,5].map(s => (
+                          <ShieldAlert key={s} size={18} className={s <= formData.shortageSensitivity[0] ? "text-neon-pink fill-neon-pink" : "text-foreground/10"} />
+                        ))}
+                      </div>
+                    </div>
+                    <Slider 
+                      value={formData.shortageSensitivity} 
+                      max={5} 
+                      min={1} 
+                      step={1} 
+                      onValueChange={(v) => setFormData(p => ({ ...p, shortageSensitivity: v }))}
+                    />
+                    <div className="flex justify-between mt-2 text-[8px] font-black uppercase opacity-40">
+                      <span>Low (Resource Saver)</span>
+                      <span>High (Safety First)</span>
+                    </div>
+                    <p className="text-[10px] mt-4 font-bold text-center opacity-60 uppercase italic">
+                      "How critical is it to NEVER run out of food?"
+                    </p>
+                  </div>
+
+                  <div className="flex gap-4">
+                    <Button variant="outline" onClick={() => setStep(1)} className="h-16 w-20 brutal-shadow border-4 border-foreground">
+                      <ArrowLeft />
+                    </Button>
+                    <Button 
+                      onClick={() => setStep(3)} 
+                      disabled={!formData.maxCapacity || !formData.plateCost}
+                      className="flex-1 h-16 bg-foreground text-background font-black uppercase italic tracking-widest text-lg brutal-shadow hover:bg-neon-blue transition-all"
+                    >
+                      Next Phase <ArrowRight size={20} className="ml-2" />
+                    </Button>
+                  </div>
+                </div>
               </div>
-              <h1 className="font-heading text-3xl font-bold font-google-sans">Extraction Complete</h1>
-              <p className="text-muted-foreground mt-2 text-sm">
-                Gemini AI has successfully captured and digitized your menu!
-              </p>
-            </div>
+            )}
 
-            <div className="bg-background border-2 border-foreground p-5 h-64 overflow-y-auto mb-6 brutal-shadow-light">
-              <ul className="space-y-3">
-                {extractedItems.map((item, id) => (
-                  <li key={id} className="flex items-start gap-3 text-sm font-bold border-b border-border pb-2 last:border-0 last:pb-0">
-                    <Check className="shrink-0 text-neon-green" size={18} />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {/* STEP 3: INTELLIGENCE ACTIVATION */}
+            {step === 3 && (
+              <div className="animate-in fade-in slide-in-from-right-8 duration-500">
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="bg-neon-pink p-4 brutal-shadow-light border-2 border-foreground">
+                    <Sparkles size={32} className="text-white" />
+                  </div>
+                  <div>
+                    <h2 className="font-heading text-3xl font-bold uppercase italic tracking-tighter">Intelligence Activation</h2>
+                    <p className="text-[10px] font-black uppercase opacity-50 tracking-widest mt-1">XGBoost Optimization Layer</p>
+                  </div>
+                </div>
 
-            <Button
-              type="button"
-              onClick={handleFinalize}
-              variant="neonPink"
-              className="w-full h-14 text-md"
-              disabled={isExtracting}
-            >
-              Confirm & Go To Dashboard <ArrowRight className="ml-2" />
-            </Button>
+                <div className="space-y-6 mb-10">
+                  <div className="p-6 bg-background border-4 border-foreground brutal-shadow-dark flex items-center justify-between hover:bg-neon-green/5 transition-colors">
+                    <div className="flex gap-4 items-center">
+                      <Calendar className="text-neon-blue" />
+                      <div>
+                        <h4 className="font-black uppercase text-sm mb-1">WB Smart Calendar</h4>
+                        <p className="text-[9px] font-bold opacity-50 uppercase">Auto-sync Holidays & Exam Weeks</p>
+                      </div>
+                    </div>
+                    <Switch checked={formData.syncHolidays} onCheckedChange={(v) => setFormData(p => ({ ...p, syncHolidays: v }))} />
+                  </div>
 
-            <button
-              className="w-full text-center mt-6 text-xs font-bold uppercase tracking-widest text-muted-foreground hover:text-foreground"
-              onClick={() => setStep(1)}
-            >
-              Re-Upload Menu
-            </button>
+                  <div className="p-6 bg-background border-4 border-foreground brutal-shadow-dark flex items-center justify-between hover:bg-neon-pink/5 transition-colors">
+                    <div className="flex gap-4 items-center">
+                      <Zap className="text-neon-yellow" />
+                      <div>
+                        <h4 className="font-black uppercase text-sm mb-1">Kolkata Appetite Index</h4>
+                        <p className="text-[9px] font-bold opacity-50 uppercase">Weather-based sentiment weightage</p>
+                      </div>
+                    </div>
+                    <Switch checked={formData.activateKAI} onCheckedChange={(v) => setFormData(p => ({ ...p, activateKAI: v }))} />
+                  </div>
+                </div>
+
+                <div className="flex gap-4">
+                  <Button variant="outline" onClick={() => setStep(2)} className="h-16 w-20 brutal-shadow border-4 border-foreground">
+                    <ArrowLeft />
+                  </Button>
+                  <Button 
+                    onClick={handleLaunch}
+                    disabled={isSubmitting}
+                    className="flex-1 h-16 bg-neon-green text-primary-foreground font-black uppercase italic tracking-widest text-lg brutal-shadow hover:scale-[1.02] border-4 border-foreground transition-all"
+                  >
+                    {isSubmitting ? "Generating Weights..." : "Launch Optimization Engine"} <Zap size={20} className="ml-2 fill-current" />
+                  </Button>
+                </div>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
     </div>
   );

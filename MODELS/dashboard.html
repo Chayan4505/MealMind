@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>EcoFeast Engine — Kitchen Intelligence Dashboard</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  :root {
+    --bg: #0a0f1e;
+    --surface: #111827;
+    --surface2: #1a2235;
+    --border: #1f2d45;
+    --accent: #f97316;
+    --accent2: #22d3ee;
+    --green: #4ade80;
+    --red: #f87171;
+    --yellow: #fbbf24;
+    --text: #e2e8f0;
+    --muted: #64748b;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .logo { display:flex; align-items:center; gap:.75rem; }
+  .logo-icon {
+    width:36px; height:36px; background:var(--accent);
+    border-radius:8px; display:grid; place-items:center;
+    font-size:18px;
+  }
+  .logo-text { font-size:1.1rem; font-weight:700; letter-spacing:-.5px; }
+  .logo-sub  { font-size:.7rem; color:var(--muted); font-weight:400; }
+  .header-right { display:flex; align-items:center; gap:1rem; }
+  .inst-select {
+    background:var(--surface2); border:1px solid var(--border);
+    color:var(--text); padding:.4rem .8rem; border-radius:8px;
+    font-family:inherit; font-size:.85rem; cursor:pointer;
+  }
+  .live-dot {
+    width:8px; height:8px; background:var(--green);
+    border-radius:50%; animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+  /* LAYOUT */
+  .container { max-width:1400px; margin:0 auto; padding:1.5rem 2rem; }
+
+  /* ALERT BANNER */
+  .alert-bar {
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    border: 1px solid var(--yellow);
+    border-radius:10px; padding:.75rem 1.25rem;
+    display:flex; align-items:center; gap:.75rem;
+    margin-bottom:1.5rem; font-size:.875rem;
+  }
+  .alert-bar.ok   { border-color: var(--green); }
+  .alert-bar.warn { border-color: var(--yellow); }
+  .alert-bar.high { border-color: var(--red); }
+
+  /* STAT CARDS */
+  .stats-grid {
+    display:grid; grid-template-columns: repeat(4,1fr);
+    gap:1rem; margin-bottom:1.5rem;
+  }
+  @media(max-width:900px){ .stats-grid{ grid-template-columns:repeat(2,1fr); } }
+
+  .stat-card {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:12px; padding:1.25rem;
+    transition: border-color .2s;
+  }
+  .stat-card:hover { border-color: var(--accent); }
+  .stat-label { font-size:.75rem; color:var(--muted); text-transform:uppercase;
+                letter-spacing:.05em; margin-bottom:.5rem; }
+  .stat-value { font-size:1.8rem; font-weight:700;
+                font-family:'JetBrains Mono',monospace; line-height:1; }
+  .stat-sub   { font-size:.75rem; color:var(--muted); margin-top:.4rem; }
+  .stat-badge {
+    display:inline-block; padding:.15rem .5rem; border-radius:4px;
+    font-size:.7rem; font-weight:600; margin-top:.4rem;
+  }
+  .badge-green { background:rgba(74,222,128,.15); color:var(--green); }
+  .badge-red   { background:rgba(248,113,113,.15); color:var(--red); }
+  .badge-orange{ background:rgba(249,115,22,.15);  color:var(--accent); }
+
+  /* MAIN GRID */
+  .main-grid {
+    display:grid; grid-template-columns:1fr 380px;
+    gap:1rem; margin-bottom:1rem;
+  }
+  @media(max-width:1100px){ .main-grid{ grid-template-columns:1fr; } }
+
+  .card {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:12px; padding:1.25rem;
+  }
+  .card-title {
+    font-size:.8rem; text-transform:uppercase; letter-spacing:.08em;
+    color:var(--muted); margin-bottom:1rem; display:flex;
+    align-items:center; justify-content:space-between;
+  }
+  .card-title span { color:var(--accent); font-weight:600; }
+
+  /* FORECAST CARD */
+  .forecast-meals { display:grid; grid-template-columns:repeat(3,1fr); gap:.75rem; }
+  .meal-card {
+    background:var(--surface2); border-radius:10px;
+    padding:1rem; text-align:center; border:1px solid var(--border);
+    transition: all .2s;
+  }
+  .meal-card:hover { border-color:var(--accent2); transform:translateY(-2px); }
+  .meal-icon { font-size:1.8rem; margin-bottom:.5rem; }
+  .meal-name { font-size:.75rem; color:var(--muted); margin-bottom:.75rem; text-transform:uppercase; }
+
+  .quantile-bar {
+    position:relative; height:6px; background:var(--border);
+    border-radius:3px; margin:.75rem 0 .5rem;
+  }
+  .quantile-fill {
+    position:absolute; height:100%; border-radius:3px;
+    background: linear-gradient(90deg, var(--accent2), var(--accent));
+  }
+  .quantile-labels {
+    display:flex; justify-content:space-between;
+    font-size:.65rem; color:var(--muted); font-family:'JetBrains Mono',monospace;
+  }
+
+  .recommend-val {
+    font-size:1.6rem; font-weight:700; color:var(--accent);
+    font-family:'JetBrains Mono',monospace;
+  }
+  .recommend-label { font-size:.7rem; color:var(--muted); }
+
+  .directive {
+    margin-top:.75rem; background:rgba(249,115,22,.08);
+    border:1px solid rgba(249,115,22,.2);
+    border-radius:6px; padding:.5rem .75rem;
+    font-size:.75rem; color:var(--text); line-height:1.4;
+  }
+
+  /* KAI GAUGE */
+  .kai-section { text-align:center; padding:.5rem 0; }
+  .kai-gauge-wrap { position:relative; width:160px; margin:0 auto 1rem; }
+  canvas#kaiGauge { width:160px!important; height:80px!important; }
+  .kai-value-overlay {
+    position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+    font-size:1.8rem; font-weight:700; font-family:'JetBrains Mono',monospace;
+  }
+  .kai-label { font-size:.75rem; color:var(--muted); margin-bottom:1rem; }
+  .kai-components { display:grid; grid-template-columns:1fr 1fr; gap:.5rem; }
+  .kai-comp {
+    background:var(--surface2); border-radius:8px; padding:.6rem;
+    font-size:.72rem; text-align:center;
+  }
+  .kai-comp-val { font-weight:700; font-size:1rem; font-family:'JetBrains Mono',monospace; }
+
+  /* PREDICT FORM */
+  .predict-form { display:grid; gap:.6rem; }
+  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:.5rem; }
+  label { font-size:.72rem; color:var(--muted); display:block; margin-bottom:.2rem; }
+  input, select {
+    width:100%; background:var(--surface2); border:1px solid var(--border);
+    color:var(--text); padding:.45rem .7rem; border-radius:7px;
+    font-family:inherit; font-size:.82rem;
+    transition: border-color .2s;
+  }
+  input:focus, select:focus {
+    outline:none; border-color:var(--accent2);
+  }
+  .btn-predict {
+    width:100%; padding:.7rem; background:var(--accent);
+    border:none; border-radius:8px; color:#fff;
+    font-family:inherit; font-size:.9rem; font-weight:600;
+    cursor:pointer; transition: opacity .2s;
+    margin-top:.25rem;
+  }
+  .btn-predict:hover { opacity:.85; }
+  .btn-predict:disabled { opacity:.5; cursor:not-allowed; }
+
+  /* BOTTOM GRID */
+  .bottom-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+  @media(max-width:900px){ .bottom-grid{ grid-template-columns:1fr; } }
+
+  /* FEEDBACK */
+  .bucket-row { display:grid; grid-template-columns:repeat(3,1fr); gap:.5rem; margin:1rem 0; }
+  .bucket-btn {
+    padding:.6rem; border-radius:8px; border:2px solid var(--border);
+    background:var(--surface2); color:var(--text); font-family:inherit;
+    font-size:.8rem; cursor:pointer; text-align:center; transition:all .2s;
+  }
+  .bucket-btn.selected.low    { border-color:var(--green);  background:rgba(74,222,128,.1); }
+  .bucket-btn.selected.medium { border-color:var(--yellow); background:rgba(251,191,36,.1); }
+  .bucket-btn.selected.high   { border-color:var(--red);    background:rgba(248,113,113,.1); }
+  .btn-submit {
+    width:100%; padding:.6rem; background:var(--surface2);
+    border:1px solid var(--accent2); border-radius:8px; color:var(--accent2);
+    font-family:inherit; font-size:.85rem; cursor:pointer; transition:all .2s;
+  }
+  .btn-submit:hover { background:rgba(34,211,238,.1); }
+
+  /* CHART */
+  .chart-wrap { position:relative; height:200px; }
+
+  /* LOADING */
+  .loading {
+    display:inline-block; width:14px; height:14px;
+    border:2px solid var(--border); border-top-color:var(--accent);
+    border-radius:50%; animation: spin .6s linear infinite;
+    vertical-align:middle; margin-right:.4rem;
+  }
+  @keyframes spin { to{ transform:rotate(360deg); } }
+
+  .toast {
+    position:fixed; bottom:1.5rem; right:1.5rem;
+    background:var(--surface); border:1px solid var(--green);
+    color:var(--green); padding:.75rem 1.25rem; border-radius:10px;
+    font-size:.85rem; z-index:999; display:none;
+    animation: slideIn .3s ease;
+  }
+  @keyframes slideIn { from{transform:translateY(20px);opacity:0} to{transform:translateY(0);opacity:1} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">🍽️</div>
+    <div>
+      <div class="logo-text">EcoFeast Engine</div>
+      <div class="logo-sub">Kitchen Intelligence Platform</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <select class="inst-select" id="instSelect" onchange="changeInstitution()">
+      <option value="UNIV_001">🎓 Jadavpur University Hostel</option>
+      <option value="CORP_001">🏢 TechPark Cafeteria</option>
+    </select>
+    <div class="live-dot"></div>
+    <span style="font-size:.75rem;color:var(--muted)">Live</span>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- ALERT BAR -->
+  <div class="alert-bar ok" id="alertBar">
+    <span>✅</span>
+    <span id="alertText">Loading alerts...</span>
+  </div>
+
+  <!-- STAT CARDS -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-label">Today's Forecast</div>
+      <div class="stat-value" id="statTotal" style="color:var(--accent2)">—</div>
+      <div class="stat-sub">Total plates (all 3 meals)</div>
+      <span class="stat-badge badge-orange" id="statConf">Loading...</span>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Kolkata Appetite Index</div>
+      <div class="stat-value" id="statKAI" style="color:var(--accent)">—</div>
+      <div class="stat-sub">Today's demand modifier</div>
+      <span class="stat-badge" id="statKAIBadge">Loading...</span>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Waste Saved (Year)</div>
+      <div class="stat-value" style="color:var(--green)" id="statWaste">—</div>
+      <div class="stat-sub">kg diverted from landfill</div>
+      <span class="stat-badge badge-green">vs heuristic planning</span>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Cost Saved (Year)</div>
+      <div class="stat-value" style="color:var(--green)" id="statSaving">—</div>
+      <div class="stat-sub">₹ potential savings</div>
+      <span class="stat-badge badge-green">20-25% reduction</span>
+    </div>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="main-grid">
+
+    <!-- FORECAST PANEL -->
+    <div class="card">
+      <div class="card-title">
+        Today's Meal Forecast
+        <span id="forecastDate">—</span>
+      </div>
+      <div class="forecast-meals" id="forecastMeals">
+        <div style="text-align:center;color:var(--muted);grid-column:1/-1;padding:2rem">
+          <span class="loading"></span> Loading forecast...
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div style="display:flex; flex-direction:column; gap:1rem;">
+
+      <!-- KAI GAUGE -->
+      <div class="card">
+        <div class="card-title">Kolkata Appetite Index <span>KAI</span></div>
+        <div class="kai-section">
+          <div class="kai-gauge-wrap">
+            <canvas id="kaiGauge"></canvas>
+            <div class="kai-value-overlay" id="kaiValOverlay">—</div>
+          </div>
+          <div class="kai-label" id="kaiStatus">Loading...</div>
+          <div class="kai-components">
+            <div class="kai-comp">
+              <div class="kai-comp-val" id="kaiWeather">—</div>
+              <div style="font-size:.65rem;color:var(--muted)">Weather</div>
+            </div>
+            <div class="kai-comp">
+              <div class="kai-comp-val" id="kaiAcademic">—</div>
+              <div style="font-size:.65rem;color:var(--muted)">Academic</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PREDICT FORM -->
+      <div class="card">
+        <div class="card-title">Custom Prediction <span>FORECAST</span></div>
+        <div class="predict-form">
+          <div class="form-row">
+            <div>
+              <label>Date</label>
+              <input type="date" id="fDate"/>
+            </div>
+            <div>
+              <label>Meal</label>
+              <select id="fMeal">
+                <option value="breakfast">🌅 Breakfast</option>
+                <option value="lunch" selected>☀️ Lunch</option>
+                <option value="dinner">🌙 Dinner</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div>
+              <label>Humidity %</label>
+              <input type="number" id="fHumidity" value="65" min="20" max="99"/>
+            </div>
+            <div>
+              <label>Temperature °C</label>
+              <input type="number" id="fTemp" value="28" min="10" max="45"/>
+            </div>
+          </div>
+          <div>
+            <label>Menu Heaviness</label>
+            <select id="fHeaviness">
+              <option value="0">🥗 Light</option>
+              <option value="1" selected>🍱 Medium</option>
+              <option value="2">🍛 Heavy (Rice/Biryani)</option>
+            </select>
+          </div>
+          <button class="btn-predict" id="btnPredict" onclick="runPrediction()">
+            ⚡ Generate Forecast
+          </button>
+          <div id="customResult" style="display:none;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM GRID -->
+  <div class="bottom-grid">
+
+    <!-- MONTHLY CHART -->
+    <div class="card">
+      <div class="card-title">Monthly Attendance Trend <span>2024</span></div>
+      <div class="chart-wrap">
+        <canvas id="monthlyChart"></canvas>
+      </div>
+    </div>
+
+    <!-- FEEDBACK -->
+    <div class="card">
+      <div class="card-title">Staff Feedback <span>POST-MEAL</span></div>
+      <p style="font-size:.8rem;color:var(--muted);margin-bottom:.25rem">
+        How much food was left over after this meal?
+      </p>
+      <div class="form-row" style="margin-top:.5rem">
+        <div>
+          <label>Meal</label>
+          <select id="fbMeal">
+            <option value="breakfast">Breakfast</option>
+            <option value="lunch">Lunch</option>
+            <option value="dinner">Dinner</option>
+          </select>
+        </div>
+        <div>
+          <label>Est. Waste (kg)</label>
+          <input type="number" id="fbWaste" value="10" min="0"/>
+        </div>
+      </div>
+      <div class="bucket-row" id="bucketRow">
+        <button class="bucket-btn low"    onclick="selectBucket('low')"   >🟢 Low<br><small>0–8 kg</small></button>
+        <button class="bucket-btn medium" onclick="selectBucket('medium')">🟡 Medium<br><small>8–25 kg</small></button>
+        <button class="bucket-btn high"   onclick="selectBucket('high')"  >🔴 High<br><small>25+ kg</small></button>
+      </div>
+      <button class="btn-submit" onclick="submitFeedback()">📤 Submit Feedback</button>
+
+      <!-- NGO Alert -->
+      <div id="ngoAlert" style="display:none; margin-top:.75rem;
+        background:rgba(34,211,238,.08); border:1px solid rgba(34,211,238,.2);
+        border-radius:8px; padding:.75rem; font-size:.78rem; line-height:1.5;">
+        <strong style="color:var(--accent2)">🤝 NGO Surplus Alert</strong><br>
+        Predicted surplus detected. Robin Hood Army has been notified for pickup.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── CONFIG ────────────────────────────────────────
+const API = "http://localhost:8000";
+let currentInst = "UNIV_001";
+let selectedBucket = null;
+let kaiChart = null;
+let monthlyChart = null;
+
+const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun",
+                "Jul","Aug","Sep","Oct","Nov","Dec"];
+
+// ── INIT ─────────────────────────────────────────
+window.onload = () => {
+  const today = new Date().toISOString().split("T")[0];
+  document.getElementById("fDate").value = today;
+  document.getElementById("forecastDate").textContent = new Date().toLocaleDateString("en-IN",{weekday:"short",month:"short",day:"numeric"});
+  initKaiGauge();
+  loadDashboard();
+};
+
+function changeInstitution() {
+  currentInst = document.getElementById("instSelect").value;
+  loadDashboard();
+}
+
+// ── LOAD DASHBOARD ────────────────────────────────
+async function loadDashboard() {
+  await Promise.all([loadAlerts(), loadForecast(), loadStats()]);
+}
+
+// ── ALERTS ───────────────────────────────────────
+async function loadAlerts() {
+  try {
+    const r = await fetch(`${API}/alert/${currentInst}`);
+    const d = await r.json();
+    const bar = document.getElementById("alertBar");
+    const txt = document.getElementById("alertText");
+    const a   = d.alerts[0];
+    bar.className = "alert-bar " + (a.severity==="low"?"ok":a.severity==="medium"?"warn":"high");
+    txt.textContent = a.message;
+  } catch(e) {
+    document.getElementById("alertText").textContent = "⚠️ API offline — showing demo data";
+  }
+}
+
+// ── TODAY FORECAST ────────────────────────────────
+async function loadForecast() {
+  const today = new Date().toISOString().split("T")[0];
+  const meals  = ["breakfast","lunch","dinner"];
+  const icons  = {breakfast:"🌅",lunch:"☀️",dinner:"🌙"};
+  const hum = 70, temp = 30;
+
+  try {
+    const results = await Promise.all(meals.map(m =>
+      fetch(`${API}/predict`, {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({
+          date: today, institution_id: currentInst, meal: m,
+          humidity: hum, temperature: temp,
+          menu_heaviness: m==="lunch"?2:1,
+          base_demand_score: 0.88, sentiment_decay: 1.0,
+          menu_item_encoded: 0, consecutive_weeks: 0
+        })
+      }).then(r=>r.json())
+    ));
+
+    renderForecast(results, icons);
+
+    // Update KAI from first result
+    const kai = results[1].kai.value;
+    updateKAI(kai, results[1].kai.status, hum > 85 ? 0.85 : 1.0,
+              results[1].prediction);
+
+    // Total plates
+    const total = results.reduce((s,r)=>s+r.prediction.recommended_cook,0);
+    document.getElementById("statTotal").textContent = total.toLocaleString();
+    document.getElementById("statConf").textContent = `±${Math.round(total*0.05)} confidence`;
+
+  } catch(e) {
+    // Demo fallback
+    renderDemoForecast(icons);
+    updateKAI(0.82, "🟢 Normal", 1.0, {q10_lower_bound:380,q90_upper_bound:480,recommended_cook:440});
+    document.getElementById("statTotal").textContent = "1,240";
+    document.getElementById("statConf").textContent = "±62 confidence";
+  }
+}
+
+function renderForecast(results, icons) {
+  const html = results.map(r => {
+    const p = r.prediction;
+    const pct = (p.recommended_cook / (currentInst==="UNIV_001"?600:450)*100).toFixed(0);
+    const fillW = ((p.recommended_cook - p.q10_lower_bound) /
+                   (p.q90_upper_bound - p.q10_lower_bound + 1) * 100).toFixed(0);
+    return `
+      <div class="meal-card">
+        <div class="meal-icon">${icons[r.meal]}</div>
+        <div class="meal-name">${r.meal}</div>
+        <div class="recommend-val">${p.recommended_cook}</div>
+        <div class="recommend-label">plates to cook</div>
+        <div class="quantile-bar">
+          <div class="quantile-fill" style="left:0;width:${fillW}%"></div>
+        </div>
+        <div class="quantile-labels">
+          <span>${p.q10_lower_bound}</span>
+          <span>${p.q90_upper_bound}</span>
+        </div>
+        <div class="directive">${r.directive_en}</div>
+      </div>`;
+  }).join("");
+  document.getElementById("forecastMeals").innerHTML = html;
+}
+
+function renderDemoForecast(icons) {
+  const demo = [
+    {meal:"breakfast",recommended_cook:248,q10:210,q90:285,dir:"Cook 248 plates for breakfast. That's 12 plates less than usual."},
+    {meal:"lunch",    recommended_cook:512,q10:460,q90:560,dir:"Cook 512 plates for lunch. Peak demand expected today."},
+    {meal:"dinner",   recommended_cook:380,q10:330,q90:420,dir:"Cook 380 plates for dinner. 18 plates less than usual."},
+  ];
+  const html = demo.map(d => `
+    <div class="meal-card">
+      <div class="meal-icon">${icons[d.meal]}</div>
+      <div class="meal-name">${d.meal}</div>
+      <div class="recommend-val">${d.recommended_cook}</div>
+      <div class="recommend-label">plates to cook</div>
+      <div class="quantile-bar">
+        <div class="quantile-fill" style="left:0;width:60%"></div>
+      </div>
+      <div class="quantile-labels"><span>${d.q10}</span><span>${d.q90}</span></div>
+      <div class="directive">${d.dir}</div>
+    </div>`).join("");
+  document.getElementById("forecastMeals").innerHTML = html;
+}
+
+// ── STATS ─────────────────────────────────────────
+async function loadStats() {
+  try {
+    const r = await fetch(`${API}/dashboard/${currentInst}`);
+    const d = await r.json();
+    document.getElementById("statWaste").textContent =
+      Math.round(d.summary.total_waste_kg * 0.22 / 1000).toFixed(1)+"T";
+    document.getElementById("statSaving").textContent =
+      "₹"+(d.summary.potential_annual_savings_inr/100000).toFixed(1)+"L";
+
+    renderMonthlyChart(d.monthly_trend);
+  } catch(e) {
+    document.getElementById("statWaste").textContent = "16.8T";
+    document.getElementById("statSaving").textContent = "₹8.4L";
+    renderMonthlyChart(null);
+  }
+}
+
+// ── KAI GAUGE ─────────────────────────────────────
+function initKaiGauge() {
+  const ctx = document.getElementById("kaiGauge").getContext("2d");
+  kaiChart = new Chart(ctx, {
+    type: "doughnut",
+    data: {
+      datasets:[{
+        data:[0, 100],
+        backgroundColor:[
+          "rgba(249,115,22,0.9)",
+          "rgba(31,45,69,0.5)"
+        ],
+        borderWidth:0,
+        circumference:180,
+        rotation:270,
+      }]
+    },
+    options:{
+      responsive:false,
+      cutout:"75%",
+      plugins:{legend:{display:false},tooltip:{enabled:false}},
+      animation:{duration:800,easing:"easeOutQuart"},
+    }
+  });
+}
+
+function updateKAI(kai, status, weatherDisc, pred) {
+  const pct = Math.round(kai * 100);
+  kaiChart.data.datasets[0].data = [pct, 100-pct];
+  const color = kai < 0.5 ? "#f87171" : kai < 0.75 ? "#fbbf24" : "#4ade80";
+  kaiChart.data.datasets[0].backgroundColor[0] = color;
+  kaiChart.update();
+
+  document.getElementById("kaiValOverlay").textContent = kai.toFixed(2);
+  document.getElementById("kaiValOverlay").style.color = color;
+  document.getElementById("kaiStatus").textContent = status;
+
+  document.getElementById("statKAI").textContent = kai.toFixed(2);
+  const badge = document.getElementById("statKAIBadge");
+  badge.textContent = status;
+  badge.className = "stat-badge " + (kai>=0.75?"badge-green":kai>=0.5?"badge-orange":"badge-red");
+
+  document.getElementById("kaiWeather").textContent = weatherDisc.toFixed(2);
+  document.getElementById("kaiWeather").style.color = weatherDisc < 1 ? "var(--yellow)" : "var(--green)";
+}
+
+// ── MONTHLY CHART ─────────────────────────────────
+function renderMonthlyChart(data) {
+  const labels = MONTHS;
+  const vals   = data
+    ? labels.map((_,i) => {
+        const row = data.find(r=>r.month===i+1);
+        return row ? Math.round(row.avg_attendance) : 0;
+      })
+    : [210,195,240,180,160,230,220,240,210,155,200,185];
+
+  if(monthlyChart) monthlyChart.destroy();
+  const ctx = document.getElementById("monthlyChart").getContext("2d");
+  monthlyChart = new Chart(ctx, {
+    type:"bar",
+    data:{
+      labels,
+      datasets:[{
+        label:"Avg Daily Plates",
+        data: vals,
+        backgroundColor: vals.map(v =>
+          v < 170 ? "rgba(248,113,113,0.7)" :
+          v < 210 ? "rgba(251,191,36,0.7)"  :
+                    "rgba(249,115,22,0.8)"
+        ),
+        borderRadius:5,
+        borderSkipped:false,
+      }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{
+        x:{ grid:{color:"rgba(255,255,255,0.05)"}, ticks:{color:"#64748b",font:{size:10}} },
+        y:{ grid:{color:"rgba(255,255,255,0.05)"}, ticks:{color:"#64748b",font:{size:10}} }
+      }
+    }
+  });
+}
+
+// ── CUSTOM PREDICTION ─────────────────────────────
+async function runPrediction() {
+  const btn = document.getElementById("btnPredict");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="loading"></span> Forecasting...';
+
+  const payload = {
+    date:              document.getElementById("fDate").value,
+    institution_id:    currentInst,
+    meal:              document.getElementById("fMeal").value,
+    humidity:          parseFloat(document.getElementById("fHumidity").value),
+    temperature:       parseFloat(document.getElementById("fTemp").value),
+    menu_heaviness:    parseInt(document.getElementById("fHeaviness").value),
+    base_demand_score: 0.88,
+    sentiment_decay:   1.0,
+    menu_item_encoded: 0,
+    consecutive_weeks: 0,
+  };
+
+  const div = document.getElementById("customResult");
+
+  try {
+    const r = await fetch(`${API}/predict`,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(payload)
+    });
+    const d = await r.json();
+    const p = d.prediction;
+    div.style.display="block";
+    div.innerHTML=`
+      <div style="background:var(--surface2);border-radius:8px;padding:.75rem;margin-top:.5rem;">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;text-align:center;margin-bottom:.75rem;">
+          <div><div style="font-size:.65rem;color:var(--muted)">Lower</div>
+               <div style="font-weight:700;font-family:'JetBrains Mono',monospace;color:var(--accent2)">${p.q10_lower_bound}</div></div>
+          <div><div style="font-size:.65rem;color:var(--muted)">Cook</div>
+               <div style="font-size:1.3rem;font-weight:700;font-family:'JetBrains Mono',monospace;color:var(--accent)">${p.recommended_cook}</div></div>
+          <div><div style="font-size:.65rem;color:var(--muted)">Upper</div>
+               <div style="font-weight:700;font-family:'JetBrains Mono',monospace;color:var(--accent2)">${p.q90_upper_bound}</div></div>
+        </div>
+        <div style="font-size:.75rem;color:var(--accent2)">🇮🇳 ${d.directive_bn}</div>
+        <div style="font-size:.72rem;color:var(--muted);margin-top:.3rem">KAI: ${d.kai.value} ${d.kai.status}</div>
+      </div>`;
+  } catch(e) {
+    div.style.display="block";
+    div.innerHTML=`<div class="directive">⚠️ API offline. Start backend with: <code>uvicorn main:app --reload</code></div>`;
+  }
+
+  btn.disabled=false;
+  btn.innerHTML="⚡ Generate Forecast";
+}
+
+// ── FEEDBACK ──────────────────────────────────────
+function selectBucket(b) {
+  selectedBucket = b;
+  document.querySelectorAll(".bucket-btn").forEach(el=>{
+    el.classList.remove("selected");
+  });
+  document.querySelector(`.bucket-btn.${b}`).classList.add("selected");
+  if(b==="high") document.getElementById("ngoAlert").style.display="block";
+  else           document.getElementById("ngoAlert").style.display="none";
+}
+
+async function submitFeedback() {
+  if(!selectedBucket){ showToast("⚠️ Please select a bucket level","var(--yellow)"); return; }
+  const payload = {
+    date:             new Date().toISOString().split("T")[0],
+    institution_id:   currentInst,
+    meal:             document.getElementById("fbMeal").value,
+    leftover_bucket:  selectedBucket,
+    est_waste_kg:     parseFloat(document.getElementById("fbWaste").value)||0,
+  };
+  try {
+    await fetch(`${API}/feedback`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
+    showToast("✅ Feedback submitted! Model will learn from this.","var(--green)");
+  } catch(e) {
+    showToast("✅ Feedback recorded (offline mode)","var(--green)");
+  }
+  selectedBucket=null;
+  document.querySelectorAll(".bucket-btn").forEach(el=>el.classList.remove("selected"));
+  document.getElementById("ngoAlert").style.display="none";
+}
+
+// ── TOAST ─────────────────────────────────────────
+function showToast(msg, color="var(--green)") {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.style.borderColor = color;
+  t.style.color = color;
+  t.style.display = "block";
+  setTimeout(()=>{ t.style.display="none"; }, 3000);
+}
+</script>
+</body>
+</html>
