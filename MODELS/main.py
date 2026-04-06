@@ -1,6 +1,6 @@
 """
 EcoFeast Engine — Phase 3: FastAPI Backend (STABLE BUILD)
-Run: uvicorn main:app --reload --host 127.0.0.1 --port 8000
+Run: uvicorn main:app --reload --host 127.0.0.1 --port 8005
 """
 
 from fastapi import FastAPI, HTTPException
