@@ -5,9 +5,9 @@ export function Footer() {
     <footer className="border-t-3 border-foreground py-16 px-6">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
         <div>
-          <h3 className="font-heading text-xl font-bold mb-4">
-            <span className="text-neon-pink">EcoFeast</span> Engine
-          </h3>
+          <Link to="/" className="inline-block mb-4">
+            <img src="/icon.png" alt="EcoFeast Engine" className="h-12 w-auto object-contain" />
+          </Link>
           <p className="text-sm opacity-70 leading-relaxed">
             AI-powered demand forecasting & waste optimization for urban kitchens. Born in Kolkata.
           </p>

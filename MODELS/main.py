@@ -1,5 +1,5 @@
 """
-EcoFeast Engine — Phase 3: FastAPI Backend (STABLE BUILD)
+MealMind — Phase 3: FastAPI Backend (STABLE BUILD)
 Run: uvicorn main:app --reload --host 127.0.0.1 --port 8005
 """
 
@@ -14,7 +14,7 @@ import json, os
 import traceback
 import hashlib
 
-app = FastAPI(title="EcoFeast Engine API")
+app = FastAPI(title="MealMind API")
 
 app.add_middleware(
     CORSMiddleware,

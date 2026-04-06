@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Button } from "./src/components/ui/button";
 import { TrendingDown, AlertTriangle, ChefHat, Droplets, BookOpen, Sun } from "lucide-react";
 
-// @ts-ignore - This is a backup file outside the routes directory, so TanStack Router types won't recognize it.
+// @ts-expect-error - This is a backup file outside the routes directory, so TanStack Router types won't recognize it.
 export const Route = createFileRoute("/dashboard")({
   component: DashboardPage,
 });

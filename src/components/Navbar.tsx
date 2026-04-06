@@ -44,9 +44,8 @@ export function Navbar() {
   return (
     <nav className="absolute top-4 left-4 right-4 md:left-8 md:right-8 z-50 bg-background/90 backdrop-blur-sm border-3 border-foreground shadow-[4px_4px_0_0_oklch(0.13_0.03_265)]">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link to="/" className="font-heading text-xl font-bold tracking-tight">
-          <span className="text-gradient-pink-blue">EcoFeast</span>
-          <span className="text-foreground"> Engine</span>
+        <Link to="/" className="flex items-center">
+          <img src="/navbar_logo.png" alt="EcoFeast Engine" className="h-10 w-auto" />
         </Link>
 
         <div className="hidden lg:flex items-center gap-1">

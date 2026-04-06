@@ -32,18 +32,16 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "EcoFeast Engine – Smart Food Demand Forecasting" },
+      { title: "MealMind – Smart Food Demand Forecasting" },
       { name: "description", content: "AI-powered demand forecasting & waste optimization for urban kitchens. Born in Kolkata." },
-      { name: "author", content: "EcoFeast" },
-      { property: "og:title", content: "EcoFeast Engine – Smart Food Demand Forecasting" },
+      { name: "author", content: "MealMind" },
+      { property: "og:title", content: "MealMind – Smart Food Demand Forecasting" },
       { property: "og:description", content: "AI-powered demand forecasting & waste optimization for urban kitchens." },
       { property: "og:type", content: "website" },
-      { property: "og:image", content: "https://lovable.dev/opengraph-image-p98pqg.png" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
-      { name: "twitter:image", content: "https://lovable.dev/opengraph-image-p98pqg.png" },
+     
     ],
     links: [
+      { rel: "icon", type: "image/png", href: "/favicon.png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" as const },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap" },
