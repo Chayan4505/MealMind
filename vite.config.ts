@@ -162,9 +162,8 @@ function devServerFnErrorLogger() {
 
 export default defineConfig(({ command, mode }) => {
   // Use Cloudflare Workers plugin for builds (produces worker output)
- // Disable for Vercel deployment by setting to false
+  // Disable for Vercel deployment by setting to false
   const useCloudflare = false;
-
 
   const env = loadEnv(mode, process.cwd(), "VITE_");
   const envDefine: Record<string, string> = {};
@@ -177,14 +176,11 @@ export default defineConfig(({ command, mode }) => {
       host: "::",
       port: 8080,
     },
-      build: {
+    build: {
       chunkSizeWarningLimit: 2000,
       rollupOptions: {
         output: {
-          manualChunks: {
-            'vendor': ['react', 'react-dom', 'lucide-react'],
-            'charts': ['recharts'],
-          },
+          manualChunks: undefined,
         },
       },
     },
@@ -193,7 +189,6 @@ export default defineConfig(({ command, mode }) => {
       alias: {
         "@": path.resolve(__dirname, "./src"),
       },
-      dedupe: ["react", "react-dom", "react/jsx-runtime", "react/jsx-dev-runtime", "@tanstack/react-query", "@tanstack/query-core"],
     },
     plugins: [
       tailwindcss(),
