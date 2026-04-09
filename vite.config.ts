@@ -162,8 +162,8 @@ function devServerFnErrorLogger() {
 
 export default defineConfig(({ command, mode }) => {
   // Use Cloudflare Workers plugin for builds (produces worker output)
-  // Skip for dev server (command=serve) since workerd runtime isn't available
-  const useCloudflare = command === "build";
+  // Disable for Vercel deployment by setting to false
+  const useCloudflare = false;
 
   const env = loadEnv(mode, process.cwd(), "VITE_");
   const envDefine: Record<string, string> = {};
@@ -176,12 +176,19 @@ export default defineConfig(({ command, mode }) => {
       host: "::",
       port: 8080,
     },
+    build: {
+      chunkSizeWarningLimit: 2000,
+      rollupOptions: {
+        output: {
+          manualChunks: undefined,
+        },
+      },
+    },
     define: envDefine,
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),
       },
-      dedupe: ["react", "react-dom", "react/jsx-runtime", "react/jsx-dev-runtime", "@tanstack/react-query", "@tanstack/query-core"],
     },
     plugins: [
       tailwindcss(),
