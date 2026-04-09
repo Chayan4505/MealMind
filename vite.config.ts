@@ -177,6 +177,17 @@ export default defineConfig(({ command, mode }) => {
       host: "::",
       port: 8080,
     },
+      build: {
+      chunkSizeWarningLimit: 2000,
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'vendor': ['react', 'react-dom', 'lucide-react'],
+            'charts': ['recharts'],
+          },
+        },
+      },
+    },
     define: envDefine,
     resolve: {
       alias: {
