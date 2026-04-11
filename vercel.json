@@ -2,22 +2,6 @@
   "version": 2,
   "rewrites": [
     {
-      "source": "/assets/(.*)",
-      "destination": "/dist/client/assets/$1"
-    },
-    {
-      "source": "/favicon.png",
-      "destination": "/dist/client/favicon.png"
-    },
-    {
-      "source": "/icon.png",
-      "destination": "/dist/client/icon.png"
-    },
-    {
-      "source": "/navbar_logo.png",
-      "destination": "/dist/client/navbar_logo.png"
-    },
-    {
       "source": "/(.*)",
       "destination": "/api/index.js"
     }
