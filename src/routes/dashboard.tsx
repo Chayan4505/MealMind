@@ -313,6 +313,10 @@ function DashboardPage() {
         const text = data.candidates[0].content.parts[0].text;
         const itemsArray = text.split('\n').filter((item: string) => item.trim() !== '');
         setExtractedItems(itemsArray);
+        
+        // Add a 3-second delay to respect Google's Free Tier burst-rate limits
+        await new Promise(resolve => setTimeout(resolve, 3000));
+        
         await generateProcurementForMenu(itemsArray);
       }
     } catch (error) { console.error(error); }
