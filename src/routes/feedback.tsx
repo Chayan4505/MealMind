@@ -20,7 +20,7 @@ function FeedbackPage() {
   const [dinnerForecast, setDinnerForecast] = useState<number>(0);
   const [backendStatus, setBackendStatus] = useState<"online" | "offline">("online");
 
-  const ML_SERVER = "http://127.0.0.1:8005";
+  const ML_SERVER = import.meta.env.VITE_ML_URL || "http://127.0.0.1:8005";
 
   const fetchDinnerPrediction = async (waste?: "Low" | "Expected" | "High") => {
     setIsRecalibrating(true);
