@@ -21,7 +21,7 @@ function SimulationPage() {
   const [predictedSurge, setPredictedSurge] = useState<number | null>(null);
   const [isPredictingSurge, setIsPredictingSurge] = useState(false);
 
-  const ML_SERVER = import.meta.env.VITE_ML_URL || "http://127.0.0.1:8005";
+  const ML_SERVER = import.meta.env.VITE_API_URL || "http://127.0.0.1:8005";
 
   const handleSimulate = async (val?: number) => {
     const finalPct = (val !== undefined ? val : dropValue) / 100;

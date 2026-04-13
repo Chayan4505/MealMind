@@ -81,7 +81,7 @@ function DashboardPage() {
       const sentiment = wasteLevel === "High" ? 0.85 : wasteLevel === "Low" ? 1.15 : 1.0;
       const capacity = user?.user_metadata?.max_capacity || 450;
       const plateCost = user?.user_metadata?.avg_plate_cost || 50;
-      const ML_SERVER = import.meta.env.VITE_ML_URL || "http://127.0.0.1:8005";
+      const ML_SERVER = import.meta.env.VITE_API_URL || "http://127.0.0.1:8005";
       const res = await fetch(`${ML_SERVER}/savings?institution_id=UNIV_001&date_str=${dateStr}&sentiment_decay=${sentiment}&capacity=${capacity}&plate_cost=${plateCost}`);
       const data = await res.json();
       setSavingsData(data);
@@ -95,7 +95,7 @@ function DashboardPage() {
     setIsSyncing(true);
     try {
       const dateStr = format(targetDate, "yyyy-MM-dd");
-      const ML_SERVER = import.meta.env.VITE_ML_URL || "http://127.0.0.1:8005";
+      const ML_SERVER = import.meta.env.VITE_API_URL || "http://127.0.0.1:8005";
       const recalibrated = localStorage.getItem("recalibrated_dinner_forecast");
       const userCapacity = user?.user_metadata?.max_capacity || 450;
       const sensitivity = user?.user_metadata?.shortage_sensitivity || 3;
@@ -216,7 +216,7 @@ function DashboardPage() {
       const sentiment = level === "High" ? 0.85 : level === "Low" ? 1.15 : 1.0;
       const userCapacity = user?.user_metadata?.max_capacity || 450;
 
-      const ML_SERVER = import.meta.env.VITE_ML_URL || "http://127.0.0.1:8005";
+      const ML_SERVER = import.meta.env.VITE_API_URL || "http://127.0.0.1:8005";
       const res = await fetch(`${ML_SERVER}/predict?capacity=${userCapacity}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

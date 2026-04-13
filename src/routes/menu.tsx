@@ -39,7 +39,7 @@ function ViewMenuPage() {
     // BATCH REQUESTS: Create a list of promises for all items
     const fetchPromises = items.map(async (itemName) => {
       try {
-        const ML_SERVER = import.meta.env.VITE_ML_URL || "http://127.0.0.1:8005";
+        const ML_SERVER = import.meta.env.VITE_API_URL || "http://127.0.0.1:8005";
         const res = await fetch(`${ML_SERVER}/predict`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
