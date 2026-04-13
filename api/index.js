@@ -1,7 +1,32 @@
 import server from '../dist/server/server.js';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default async function handler(req, res) {
   try {
+    const { pathname } = new URL(req.url, `http://${req.headers.host}`);
+    
+    // Check if the file exists in dist/client
+    const filePath = path.join(__dirname, '..', 'dist', 'client', pathname);
+    if (fs.existsSync(filePath) && fs.lstatSync(filePath).isFile()) {
+       const ext = path.extname(filePath);
+       const contentTypes = {
+         '.js': 'application/javascript',
+         '.css': 'text/css',
+         '.png': 'image/png',
+         '.jpg': 'image/jpeg',
+         '.svg': 'image/svg+xml',
+         '.ico': 'image/x-icon',
+       };
+       res.setHeader('Content-Type', contentTypes[ext] || 'application/octet-stream');
+       res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+       fs.createReadStream(filePath).pipe(res);
+       return;
+    }
+
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const host = req.headers['host'];
     const fullUrl = `${protocol}://${host}${req.url}`;
